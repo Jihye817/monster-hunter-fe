@@ -52,6 +52,8 @@ nav > div:hover {
 section {
   margin-left: 20px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* main */
@@ -74,13 +76,82 @@ section {
   text-align: center;
   line-height: 1.5rem;
 }
-
-/* monster list */
-.monster_list_title {
+.content_title {
   font-size: 26px;
   background-color: #404049;
   padding: 10px 0 10px 14px;
 }
+
+/* board */
+.board_container {
+  margin: 12px 0px;
+}
+.board_container .post_number,
+.board_container .post_view {
+  width: 50px;
+}
+.board_container .post_title {
+  text-align: start;
+  padding-left: 20px;
+  width: 480px;
+}
+.board_container .post_title > span:hover {
+  cursor: pointer;
+  color: #e69e4b;
+}
+.board_container .post_nickname {
+  width: 130px;
+}
+.board_container .post_created_at {
+  width: 120px;
+}
+.board_container .list_item {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.board_container .list_item:hover {
+  background-color: #404049;
+}
+.post_list_wrap {
+  height: 600px;
+}
+.bottom_wrap {
+  display: flex;
+  justify-content: center;
+}
+.board_search_bar_wrap {
+  display: flex;
+  margin: 12px 0px;
+  flex: 1;
+  justify-content: center;
+}
+.board_search_bar_wrap > input {
+  width: 300px;
+  margin-right: 10px;
+}
+.bottom_wrap .write_btn_wrap {
+  display: flex;
+  margin: 12px 0px;
+  padding-left: 20px;
+}
+.pagination_wrap {
+  display: flex;
+  margin-top: 12px;
+  justify-content: center;
+  align-items: center;
+}
+.pagination_wrap > img {
+  cursor: pointer;
+}
+.pagination_wrap > span {
+  margin: 0px 6px;
+  cursor: pointer;
+}
+.pagination_wrap > span:hover {
+  color: #e69e4b;
+}
+
+/* monster list */
 .search_bar_wrap {
   display: flex;
   margin: 12px 0px;
@@ -103,14 +174,12 @@ section {
   justify-content: space-between;
   font-weight: 700;
 }
-.list_title .icon {
+.list_title .icon,
+.list_title .type {
   width: 150px;
 }
 .list_title .name {
   width: 300px;
-}
-.list_title .type {
-  width: 150px;
 }
 .list_title .weak {
   width: 200px;

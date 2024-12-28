@@ -3,11 +3,12 @@ import "./App.css";
 import styled, { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "./theme/theme";
 import apiModules from "./utils/api";
-import MainPage from "./pages/MainPage";
-import MonsterList from "./components/MonsterList";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ROUTES } from "./utils/constants";
+import MainPage from "./pages/MainPage";
+import MonsterList from "./components/MonsterList";
 import MonsterDetail from "./components/MonsterDetail";
+import Board from "./components/Board";
 
 const Body = styled.div`
   min-height: 100vh;
@@ -33,6 +34,12 @@ const Main = styled.div`
   padding: 20px;
   min-height: calc(100vh - 101px);
 `;
+const Footer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+  color: #404049;
+`;
 
 function App() {
   const [theme, setTheme] = useState("dark");
@@ -46,9 +53,13 @@ function App() {
   const navigateToMain = () => {
     navigate(ROUTES.MAIN);
   };
+  const navigateToBoard = () => {
+    navigate(ROUTES.BOARD);
+  };
   const navigateToMonsterList = () => {
     navigate(ROUTES.MONSTER_LIST);
   };
+
   return (
     <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
       <Body>
@@ -65,7 +76,7 @@ function App() {
           </Header>
           <Main>
             <nav>
-              <div>자유게시판</div>
+              <div onClick={navigateToBoard}>자유게시판</div>
               <div onClick={navigateToMonsterList}>몬스터 정보</div>
             </nav>
             <section>
@@ -75,8 +86,15 @@ function App() {
                   path={ROUTES.MONSTER_LIST}
                   element={<MonsterList />}
                 ></Route>
-                <Route path={ROUTES.MONSTER_DETAIL} element={<MonsterDetail />}></Route>
+                <Route path={ROUTES.BOARD} element={<Board />}></Route>
+                <Route
+                  path={ROUTES.MONSTER_DETAIL}
+                  element={<MonsterDetail />}
+                ></Route>
               </Routes>
+              <Footer>
+                © 2024. Jihye. All rights reserved. wlgul817@gmail.com
+              </Footer>
             </section>
           </Main>
         </Container>

@@ -5,7 +5,7 @@ const MonsterList = () => {
   const listItem = mockData;
   return (
     <>
-      <div className="monster_list_title">몬스터 정보</div>
+      <div className="content_title">몬스터 정보</div>
       <div className="search_bar_wrap">
         <div className="icon_wrap">
           <img

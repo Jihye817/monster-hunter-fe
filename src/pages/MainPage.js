@@ -2,7 +2,7 @@ const MainPage = () => {
   return (
     <div className="main_container">
       <div className="main_banner_wrap">
-        <img src={require("../assets/images/main_banner.png")}></img>
+        <img src={require("../assets/images/main_banner.png")} alt="banner" />
       </div>
       <div className="main_text">
         안녕하세요

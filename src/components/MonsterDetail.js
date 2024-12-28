@@ -12,7 +12,7 @@ const MonsterDetail = () => {
 
   return (
     <>
-      <div className="monster_list_title">몬스터 정보</div>
+      <div className="content_title">몬스터 정보</div>
       <div className="detail_breadcrumb">
         <div>
           <img src={require("../assets/icons/arrow_left_w.png")} alt="arrow_left"></img>
