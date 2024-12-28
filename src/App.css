@@ -95,3 +95,46 @@ section {
   padding: 0px 8px;
   align-content: center;
 }
+.list_title {
+  display: flex;
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #eff0f5;
+  justify-content: space-between;
+  font-weight: 700;
+}
+.list_title .icon {
+  width: 150px;
+}
+.list_title .name {
+  width: 300px;
+}
+.list_title .type {
+  width: 150px;
+}
+.list_title .weak {
+  width: 200px;
+}
+.list_item {
+  display: flex;
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #404049;
+  justify-content: space-between;
+  align-items: center;
+}
+.list_item .icon {
+  width: 150px;
+}
+.list_item .icon > img {
+  width: 100%;
+}
+.list_item .name {
+  width: 300px;
+}
+.list_item .type {
+  width: 150px;
+}
+.list_item .weak {
+  width: 200px;
+}

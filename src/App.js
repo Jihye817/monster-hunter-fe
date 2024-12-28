@@ -9,14 +9,13 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { ROUTES } from "./utils/constants";
 
 const Body = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   margin: 0 auto;
   background: ${({ theme }) => theme.backgroundColor};
   color: ${({ theme }) => theme.textColor};
 `;
 const Container = styled.div`
   margin: 0 auto;
-  height: 100%;
   min-width: 1200px;
   max-width: 1200px;
   background: ${({ theme }) => theme.backgroundColor};
@@ -31,7 +30,7 @@ const Header = styled.div`
 const Main = styled.div`
   display: flex;
   padding: 20px;
-  height: calc(100vh - 101px);
+  min-height: calc(100vh - 101px);
 `;
 
 function App() {
