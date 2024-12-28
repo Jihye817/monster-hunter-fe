@@ -54,7 +54,9 @@ function App() {
       <Body>
         <Container>
           <Header>
-            <span className="title" onClick={navigateToMain}>몬스터 헌터 사이트</span>
+            <span className="title" onClick={navigateToMain}>
+              몬스터 헌터 사이트
+            </span>
             <div className="title_btn_wrap">
               <span>로그인</span>
               <div className="title_bar"></div>
@@ -66,10 +68,15 @@ function App() {
               <div>자유게시판</div>
               <div onClick={navigateToMonsterList}>몬스터 정보</div>
             </nav>
-            <Routes>
-              <Route path={ROUTES.MAIN} element={<MainPage />}></Route>
-              <Route path={ROUTES.MONSTER_LIST} element={<MonsterList />}></Route>
-            </Routes>
+            <section>
+              <Routes>
+                <Route path={ROUTES.MAIN} element={<MainPage />}></Route>
+                <Route
+                  path={ROUTES.MONSTER_LIST}
+                  element={<MonsterList />}
+                ></Route>
+              </Routes>
+            </section>
           </Main>
         </Container>
         {/* <button onClick={toggleTheme}>테마변경</button> */}
