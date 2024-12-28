@@ -9,7 +9,7 @@ const MonsterList = () => {
       <div className="search_bar_wrap">
         <div className="icon_wrap">
           <img
-            src={require("../assets/icons/icon_search_w.png")}
+            src={require("../assets/icons/search_w.png")}
             alt="검색아이콘"
           ></img>
         </div>

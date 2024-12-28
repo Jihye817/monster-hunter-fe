@@ -7,6 +7,7 @@ import MainPage from "./pages/MainPage";
 import MonsterList from "./components/MonsterList";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ROUTES } from "./utils/constants";
+import MonsterDetail from "./components/MonsterDetail";
 
 const Body = styled.div`
   min-height: 100vh;
@@ -74,6 +75,7 @@ function App() {
                   path={ROUTES.MONSTER_LIST}
                   element={<MonsterList />}
                 ></Route>
+                <Route path={ROUTES.MONSTER_DETAIL} element={<MonsterDetail />}></Route>
               </Routes>
             </section>
           </Main>
