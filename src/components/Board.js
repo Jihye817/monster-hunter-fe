@@ -1,7 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { mockPost } from "../mockData";
+import PostListItem from "./PostListItem";
 
 const Board = () => {
   const postList = mockPost;
+
   return (
     <>
       <div className="content_title">자유게시판</div>
@@ -11,7 +14,9 @@ const Board = () => {
           <div
             className="post_title"
             style={{ width: "500px", paddingLeft: "0px", textAlign: "center" }}
-          >제목</div>
+          >
+            제목
+          </div>
           <div className="post_nickname">닉네임</div>
           <div className="post_view">조회수</div>
           <div className="post_created_at">등록일</div>
@@ -23,17 +28,7 @@ const Board = () => {
             </>
           ) : (
             postList.map((item) => {
-              return (
-                <div className="list_item" key={item.id}>
-                  <div className="post_number">{item.id}</div>
-                  <div className="post_title">
-                    <span>{item.title}</span>
-                  </div>
-                  <div className="post_nickname">{item.nickname}</div>
-                  <div className="post_view">{item.view}</div>
-                  <div className="post_created_at">{item.created_at}</div>
-                </div>
-              );
+              return <PostListItem item={item} key={item.id} />;
             })
           )}
         </div>
