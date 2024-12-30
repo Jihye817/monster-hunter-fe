@@ -151,6 +151,37 @@ section {
   color: #e69e4b;
 }
 
+.post_detail_container {
+  padding: 20px 0px;
+}
+.post_title_wrap {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: end;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eff0f5;
+}
+.post_title_wrap > span:first-child {
+  padding-left: 10px;
+  font-size: 20px;
+  font-weight: 700;
+}
+.post_title_wrap > div{
+  display: flex;
+  align-items: center;
+}
+.post_title_wrap > div > span:last-child{
+  padding-right: 10px;
+}
+.post_text_wrap {
+  padding: 20px 10px;
+  min-height: 250px;
+}
+.post_btn_wrap {
+  text-align: end;
+}
+
 /* monster list */
 .search_bar_wrap {
   display: flex;

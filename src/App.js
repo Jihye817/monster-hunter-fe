@@ -9,6 +9,7 @@ import MainPage from "./pages/MainPage";
 import MonsterList from "./components/MonsterList";
 import MonsterDetail from "./components/MonsterDetail";
 import Board from "./components/Board";
+import PostDetail from "./components/\bPostDetail";
 
 const Body = styled.div`
   min-height: 100vh;
@@ -39,6 +40,7 @@ const Footer = styled.div`
   justify-content: center;
   padding: 20px;
   color: #404049;
+  font-size: 14px;
 `;
 
 function App() {
@@ -88,12 +90,16 @@ function App() {
                 ></Route>
                 <Route path={ROUTES.BOARD} element={<Board />}></Route>
                 <Route
+                  path={ROUTES.POST_DETAIL}
+                  element={<PostDetail />}
+                ></Route>
+                <Route
                   path={ROUTES.MONSTER_DETAIL}
                   element={<MonsterDetail />}
                 ></Route>
               </Routes>
               <Footer>
-                © 2024. Jihye. All rights reserved. wlgul817@gmail.com
+                © 2024. Park Jihye. All rights reserved. wlgul817@gmail.com
               </Footer>
             </section>
           </Main>
