@@ -14,6 +14,14 @@ button.primary {
   border-radius: 4px;
   cursor: pointer;
 }
+button.outlined {
+  padding: 8px 16px;
+  background-color: transparent;
+  border: 1px solid #e69e4b;
+  color: #e69e4b;
+  border-radius: 4px;
+  cursor: pointer;
+}
 input[type="text"] {
   padding: 8px 16px;
   height: 24px;
@@ -201,11 +209,15 @@ section {
 .post_btn_wrap {
   text-align: end;
 }
+.post_btn_wrap > button {
+  margin-left: 10px;
+}
 .post_textarea {
   padding: 20px;
   width: calc(100% - 40px);
   border-radius: 4px;
   min-height: 250px;
+  max-height: 500px;
   background-color: #404049;
   color: #eff0f5;
 }

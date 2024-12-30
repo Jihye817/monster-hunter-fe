@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../utils/constants";
+import TextareaAutosize from "react-textarea-autosize";
 
 const PostCreate = () => {
   const navigate = useNavigate();
@@ -29,10 +30,14 @@ const PostCreate = () => {
           </div>
         </div>
         <div className="post_text_wrap">
-          <textarea className="post_textarea" placeholder="내용을 입력해주세요"></textarea>
+          <TextareaAutosize
+            className="post_textarea"
+            placeholder="내용을 입력해주세요"
+          ></TextareaAutosize>
         </div>
         <div className="post_btn_wrap">
-          <button className="primary">글쓰기</button>
+          <button className="outlined">취소</button>
+          <button className="primary">등록</button>
         </div>
       </div>
     </>
