@@ -1,9 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { mockPost } from "../mockData";
 import PostListItem from "./PostListItem";
+import { ROUTES } from "../utils/constants";
 
 const Board = () => {
   const postList = mockPost;
+  const navigate = useNavigate();
+  const navigateToPostCreate = () => {
+    navigate(ROUTES.POST_CREATE);
+  };
 
   return (
     <>
@@ -38,7 +43,7 @@ const Board = () => {
             <button className="primary">검색</button>
           </div>
           <div className="write_btn_wrap">
-            <button className="primary">글쓰기</button>
+            <button className="primary" onClick={navigateToPostCreate}>글쓰기</button>
           </div>
         </div>
         <div className="pagination_wrap">

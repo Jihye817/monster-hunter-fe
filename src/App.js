@@ -10,6 +10,7 @@ import MonsterList from "./components/MonsterList";
 import MonsterDetail from "./components/MonsterDetail";
 import Board from "./components/Board";
 import PostDetail from "./components/\bPostDetail";
+import PostCreate from "./components/PostCreate";
 
 const Body = styled.div`
   min-height: 100vh;
@@ -92,6 +93,10 @@ function App() {
                 <Route
                   path={ROUTES.POST_DETAIL}
                   element={<PostDetail />}
+                ></Route>
+                <Route
+                  path={ROUTES.POST_CREATE}
+                  element={<PostCreate />}
                 ></Route>
                 <Route
                   path={ROUTES.MONSTER_DETAIL}

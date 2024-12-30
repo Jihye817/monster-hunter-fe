@@ -1,18 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../utils/constants";
 
-const PostDetail = () => {
+const PostCreate = () => {
   const navigate = useNavigate();
   const navigateToBoard = () => {
     navigate(ROUTES.BOARD);
   };
-  const navigateToPostCreate = () => {
-    navigate(ROUTES.POST_CREATE);
-  };
-
   return (
     <>
-      <div className="content_title">자유게시판</div>
+      <div className="content_title">글쓰기</div>
       <div className="detail_breadcrumb">
         <div>
           <img
@@ -22,24 +18,25 @@ const PostDetail = () => {
         </div>
         <span onClick={navigateToBoard}>목록으로</span>
       </div>
+
       <div className="post_detail_container">
         <div className="post_title_wrap">
-          <span>게시물 제목입니다.</span>
+          <input type="text" placeholder="제목을 입력해주세요"></input>
           <div>
             <span>작성자</span>
             <div className="title_bar"></div>
             <span>2024-01-01</span>
           </div>
         </div>
-        <div className="post_text_wrap">게시물 내용입니다.</div>
+        <div className="post_text_wrap">
+          <textarea className="post_textarea" placeholder="내용을 입력해주세요"></textarea>
+        </div>
         <div className="post_btn_wrap">
-          <button className="primary" onClick={navigateToPostCreate}>
-            글쓰기
-          </button>
+          <button className="primary">글쓰기</button>
         </div>
       </div>
     </>
   );
 };
 
-export default PostDetail;
+export default PostCreate;
