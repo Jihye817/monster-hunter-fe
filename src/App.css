@@ -40,6 +40,16 @@ input[type="password"]:focus {
 textarea {
   resize: none;
 }
+select {
+  padding: 8px 16px;
+  height: 24px;
+  box-sizing: content-box;
+  border: none;
+  border-radius: 4px;
+  background-color: #404049;
+  border: 1px solid #767676;
+  color: #eff0f5;
+}
 
 .title {
   font-size: 34px;
@@ -131,6 +141,40 @@ section {
 }
 .login_bottom > span:hover {
   color: #e69e4b;
+}
+
+/* join */
+.join_wrap {
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.join_wrap .join {
+  height: 24px;
+  box-sizing: content-box;
+}
+.join_wrap > div:first-child {
+  padding-bottom: 20px;
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+}
+.join_title_small {
+  font-size: 12px;
+  margin-left: 4px;
+  color: #e9b554;
+}
+.join_input_wrap {
+  margin-top: 6px;
+  display: flex;
+}
+.join_input_wrap > input,
+.join_input_wrap > select {
+  flex: 1;
+}
+.join_input_wrap > button {
+  margin-left: 10px;
 }
 
 /* board */

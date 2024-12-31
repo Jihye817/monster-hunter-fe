@@ -12,6 +12,7 @@ import Board from "./components/Board";
 import PostDetail from "./components/\bPostDetail";
 import PostCreate from "./components/PostCreate";
 import LoginPage from "./pages/LoginPage";
+import JoinPage from "./pages/JoinPage";
 
 const Body = styled.div`
   min-height: 100vh;
@@ -65,12 +66,16 @@ function App() {
   const navigateToLogin = () => {
     navigate(ROUTES.LOGIN);
   };
+  const navigateToJoin = () => {
+    navigate(ROUTES.JOIN);
+  };
 
   return (
     <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
       <Body>
         <Routes>
           <Route path={ROUTES.LOGIN} element={<LoginPage />}></Route>
+          <Route path={ROUTES.JOIN} element={<JoinPage />}></Route>
           <Route
             path={ROUTES.MAIN}
             element={
@@ -82,7 +87,7 @@ function App() {
                   <div className="title_btn_wrap">
                     <span onClick={navigateToLogin}>로그인</span>
                     <div className="title_bar"></div>
-                    <span>회원가입</span>
+                    <span onClick={navigateToJoin}>회원가입</span>
                   </div>
                 </Header>
                 <Main>
