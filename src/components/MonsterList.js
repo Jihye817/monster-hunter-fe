@@ -4,7 +4,6 @@ import apiModules from "../utils/api";
 import { useEffect, useState } from "react";
 
 const MonsterList = () => {
-  // const listItem = mockData;
   const [listItem, setListItem] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filteredItem, setFilteredItem] = useState([]);

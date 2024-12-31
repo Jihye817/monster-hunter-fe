@@ -2,12 +2,28 @@ import { useNavigate } from "react-router-dom";
 import { mockPost } from "../mockData";
 import PostListItem from "./PostListItem";
 import { ROUTES } from "../utils/constants";
+import { useEffect, useState } from "react";
+import apiModules from "../utils/api";
 
 const Board = () => {
-  const postList = mockPost;
+  const [postList, setPostList] = useState([]);
   const navigate = useNavigate();
   const navigateToPostCreate = () => {
     navigate(ROUTES.POST_CREATE);
+  };
+
+  useEffect(() => {
+    fetchPostLists();
+  }, []);
+
+  const fetchPostLists = async () => {
+    try {
+      let posts = await apiModules.getBoardPostLists();
+      setPostList(posts);
+      console.log(postList);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -33,7 +49,7 @@ const Board = () => {
             </>
           ) : (
             postList.map((item) => {
-              return <PostListItem item={item} key={item.id} />;
+              return <PostListItem item={item} key={item.seq} />;
             })
           )}
         </div>
@@ -43,7 +59,9 @@ const Board = () => {
             <button className="primary">검색</button>
           </div>
           <div className="write_btn_wrap">
-            <button className="primary" onClick={navigateToPostCreate}>글쓰기</button>
+            <button className="primary" onClick={navigateToPostCreate}>
+              글쓰기
+            </button>
           </div>
         </div>
         <div className="pagination_wrap">

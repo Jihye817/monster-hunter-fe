@@ -1,13 +1,6 @@
 import axios from "axios";
 
-const test = async () => {
-  try {
-    const response = await axios.get("http://59.11.225.224:8080/");
-  } catch (error) {
-    console.log(error);
-  }
-};
-
+//monster
 const getMonsterLists = async () => {
   try {
     const response = await axios.get("http://59.11.225.224:8080/monster/list");
@@ -28,10 +21,20 @@ const getMonsterDetail = async (seq) => {
   }
 };
 
+//board
+const getBoardPostLists = async () => {
+  try {
+    const response = await axios.get("http://59.11.225.224:8080/board/list");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const apiModules = {
-  test,
   getMonsterLists,
   getMonsterDetail,
+  getBoardPostLists,
 };
 
 export default apiModules;

@@ -51,7 +51,6 @@ function App() {
     // setTheme(() => {
     //   return theme === "dark" ? "light" : "dark";
     // });
-    await apiModules.test();
   };
   const navigate = useNavigate();
   const navigateToMain = () => {
