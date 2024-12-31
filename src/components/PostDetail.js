@@ -1,13 +1,32 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ROUTES } from "../utils/constants";
+import { useEffect, useState } from "react";
+import apiModules from "../utils/api";
 
 const PostDetail = () => {
+  const params = useParams();
   const navigate = useNavigate();
+  const [post, setPost] = useState([]);
+
   const navigateToBoard = () => {
     navigate(ROUTES.BOARD);
   };
   const navigateToPostCreate = () => {
     navigate(ROUTES.POST_CREATE);
+  };
+
+  useEffect(() => {
+    fetchPostDetail();
+  }, []);
+
+  const fetchPostDetail = async () => {
+    try {
+      let postDetail = await apiModules.getPostDetail(params.id);
+      postDetail.regDate = postDetail.regDate.split("T")[0];
+      setPost(postDetail);
+    } catch (error) {
+      console.log("error : ", error);
+    }
   };
 
   return (
@@ -24,14 +43,14 @@ const PostDetail = () => {
       </div>
       <div className="post_detail_container">
         <div className="post_title_wrap">
-          <span>게시물 제목입니다.</span>
+          <span>{post.title}</span>
           <div>
-            <span>작성자</span>
+            <span>{post.nickname}</span>
             <div className="title_bar"></div>
-            <span>2024-01-01</span>
+            <span>{post.regDate}</span>
           </div>
         </div>
-        <div className="post_text_wrap">게시물 내용입니다.</div>
+        <div className="post_text_wrap">{post.body}</div>
         <div className="post_btn_wrap">
           <button className="primary" onClick={navigateToPostCreate}>
             글쓰기

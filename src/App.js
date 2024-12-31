@@ -77,7 +77,7 @@ function App() {
               <Container>
                 <Header>
                   <span className="title" onClick={navigateToMain}>
-                    몬스터 헌터 사이트
+                    MONSTER HUNTER :KR
                   </span>
                   <div className="title_btn_wrap">
                     <span onClick={navigateToLogin}>로그인</span>

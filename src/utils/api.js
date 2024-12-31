@@ -31,10 +31,22 @@ const getBoardPostLists = async () => {
   }
 };
 
+const getPostDetail = async (seq) => {
+  try {
+    const response = await axios.get(
+      "http://59.11.225.224:8080/board/detail/" + seq
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const apiModules = {
   getMonsterLists,
   getMonsterDetail,
   getBoardPostLists,
+  getPostDetail,
 };
 
 export default apiModules;

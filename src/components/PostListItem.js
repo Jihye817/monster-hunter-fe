@@ -4,7 +4,7 @@ const PostList = ({ item }) => {
   const navigate = useNavigate();
 
   const navigateToPost = () => {
-    navigate(`/board/${item.id}`);
+    navigate(`/board/${item.seq}`);
   };
   return (
     <div className="list_item" key={item.seq}>

@@ -20,7 +20,6 @@ const Board = () => {
     try {
       let posts = await apiModules.getBoardPostLists();
       setPostList(posts);
-      console.log(postList);
     } catch (error) {
       console.log(error);
     }
@@ -44,9 +43,7 @@ const Board = () => {
         </div>
         <div className="post_list_wrap">
           {postList === undefined || postList.length === 0 ? (
-            <>
-              <span>게시물이 없습니다.</span>
-            </>
+            <div className="no_data">게시물이 없습니다.</div>
           ) : (
             postList.map((item) => {
               return <PostListItem item={item} key={item.seq} />;
