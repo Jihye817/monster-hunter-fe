@@ -22,7 +22,8 @@ button.outlined {
   border-radius: 4px;
   cursor: pointer;
 }
-input[type="text"] {
+input[type="text"],
+input[type="password"] {
   padding: 8px 16px;
   height: 24px;
   border: none;
@@ -31,7 +32,8 @@ input[type="text"] {
   border: 1px solid #767676;
   color: #eff0f5;
 }
-input[type="text"]:focus {
+input[type="text"]:focus,
+input[type="password"]:focus {
   border: 1px solid #e69e4b;
   outline: none;
 }
@@ -103,6 +105,32 @@ section {
   font-size: 26px;
   background-color: #404049;
   padding: 10px 0 10px 14px;
+}
+
+/* login */
+.login_wrap {
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.login_wrap > div:first-child {
+  padding-bottom: 20px;
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+}
+.login_bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 12px;
+}
+.login_bottom > span {
+  cursor: pointer;
+}
+.login_bottom > span:hover {
+  color: #e69e4b;
 }
 
 /* board */
