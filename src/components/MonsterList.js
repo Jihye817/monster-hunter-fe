@@ -6,10 +6,23 @@ import { useEffect, useState } from "react";
 const MonsterList = () => {
   // const listItem = mockData;
   const [listItem, setListItem] = useState([]);
+  const [searchText, setSearchText] = useState("");
+  const [filteredItem, setFilteredItem] = useState([]);
 
   useEffect(() => {
     fetchMonsterLists();
   }, []);
+
+  useEffect(() => {
+    if (searchText === "") {
+      setFilteredItem(listItem);
+    } else {
+      const filtered = listItem.filter(
+        (item) => item.name.toLowerCase().includes(searchText.toLowerCase()) // 이름으로 검색
+      );
+      setFilteredItem(filtered);
+    }
+  }, [searchText, listItem]);
 
   const fetchMonsterLists = async () => {
     try {
@@ -17,6 +30,7 @@ const MonsterList = () => {
       if (monsterList === null) {
         let monsterList = await apiModules.getMonsterLists();
         setListItem(monsterList);
+        setFilteredItem(monsterList);
         localStorage.setItem("monsterList", JSON.stringify(monsterList));
       } else {
         const parsedList = JSON.parse(monsterList);
@@ -25,6 +39,10 @@ const MonsterList = () => {
     } catch (error) {
       console.log("error : ", error);
     }
+  };
+
+  const handleSearchInputChange = (e) => {
+    setSearchText(e.target.value);
   };
 
   return (
@@ -37,7 +55,11 @@ const MonsterList = () => {
             alt="검색아이콘"
           ></img>
         </div>
-        <input type="text" placeholder="검색어를 입력해주세요" />
+        <input
+          type="text"
+          placeholder="검색어를 입력해주세요"
+          onChange={handleSearchInputChange}
+        />
         <button className="primary">검색</button>
       </div>
       <div>
@@ -47,10 +69,10 @@ const MonsterList = () => {
           <div className="type">종류</div>
           <div className="weak">약점속성</div>
         </div>
-        {listItem === undefined || listItem.length === 0 ? (
-          <span>데이터가 없습니다</span>
+        {filteredItem === undefined || filteredItem.length === 0 ? (
+          <div className="no_data">데이터가 없습니다</div>
         ) : (
-          listItem.map((item) => {
+          filteredItem.map((item) => {
             return <MonsterListItem item={item} key={item.seq} />;
           })
         )}
