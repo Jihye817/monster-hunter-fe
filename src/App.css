@@ -276,8 +276,17 @@ section {
 .list_item .name {
   width: 300px;
 }
-.list_item .name > span {
+.list_item .name > label > span:first-child {
+  display: block;
   cursor: pointer;
+  font-weight: normal;
+  margin-bottom: 4px;
+  font-size: 14px;
+  color: #e9b554;
+}
+.list_item .name > label > span {
+  cursor: pointer;
+  font-weight: 700;
 }
 .list_item .name > span:hover {
   color: #e69e4b;

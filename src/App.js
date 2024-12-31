@@ -11,6 +11,7 @@ import MonsterDetail from "./components/MonsterDetail";
 import Board from "./components/Board";
 import PostDetail from "./components/\bPostDetail";
 import PostCreate from "./components/PostCreate";
+import LoginPage from "./pages/LoginPage";
 
 const Body = styled.div`
   min-height: 100vh;
@@ -62,53 +63,65 @@ function App() {
   const navigateToMonsterList = () => {
     navigate(ROUTES.MONSTER_LIST);
   };
+  const navigateToLogin = () => {
+    navigate(ROUTES.LOGIN);
+  };
 
   return (
     <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
       <Body>
-        <Container>
-          <Header>
-            <span className="title" onClick={navigateToMain}>
-              몬스터 헌터 사이트
-            </span>
-            <div className="title_btn_wrap">
-              <span>로그인</span>
-              <div className="title_bar"></div>
-              <span>회원가입</span>
-            </div>
-          </Header>
-          <Main>
-            <nav>
-              <div onClick={navigateToBoard}>자유게시판</div>
-              <div onClick={navigateToMonsterList}>몬스터 정보</div>
-            </nav>
-            <section>
-              <Routes>
-                <Route path={ROUTES.MAIN} element={<MainPage />}></Route>
-                <Route
-                  path={ROUTES.MONSTER_LIST}
-                  element={<MonsterList />}
-                ></Route>
-                <Route path={ROUTES.BOARD} element={<Board />}></Route>
-                <Route
-                  path={ROUTES.POST_DETAIL}
-                  element={<PostDetail />}
-                ></Route>
-                <Route
-                  path={ROUTES.POST_CREATE}
-                  element={<PostCreate />}
-                ></Route>
-                <Route
-                  path={ROUTES.MONSTER_DETAIL}
-                  element={<MonsterDetail />}
-                ></Route>
-              </Routes>
-              <Footer>
-                © 2024. Park Jihye. All rights reserved. wlgul817@gmail.com
-              </Footer>
-            </section>
-          </Main>
-        </Container>
+        <Routes>
+          <Route path={ROUTES.LOGIN} element={<LoginPage />}></Route>
+          <Route
+            path={ROUTES.MAIN}
+            element={
+              <Container>
+                <Header>
+                  <span className="title" onClick={navigateToMain}>
+                    몬스터 헌터 사이트
+                  </span>
+                  <div className="title_btn_wrap">
+                    <span onClick={navigateToLogin}>로그인</span>
+                    <div className="title_bar"></div>
+                    <span>회원가입</span>
+                  </div>
+                </Header>
+                <Main>
+                  <nav>
+                    <div onClick={navigateToBoard}>자유게시판</div>
+                    <div onClick={navigateToMonsterList}>몬스터 정보</div>
+                  </nav>
+                  <section>
+                    <Routes>
+                      <Route path={ROUTES.MAIN} element={<MainPage />}></Route>
+                      <Route
+                        path={ROUTES.MONSTER_LIST}
+                        element={<MonsterList />}
+                      ></Route>
+                      <Route path={ROUTES.BOARD} element={<Board />}></Route>
+                      <Route
+                        path={ROUTES.POST_DETAIL}
+                        element={<PostDetail />}
+                      ></Route>
+                      <Route
+                        path={ROUTES.POST_CREATE}
+                        element={<PostCreate />}
+                      ></Route>
+                      <Route
+                        path={ROUTES.MONSTER_DETAIL}
+                        element={<MonsterDetail />}
+                      ></Route>
+                    </Routes>
+                    <Footer>
+                      © 2024. Park Jihye. All rights reserved.
+                      wlgul817@gmail.com
+                    </Footer>
+                  </section>
+                </Main>
+              </Container>
+            }
+          ></Route>
+        </Routes>
         {/* <button onClick={toggleTheme}>테마변경</button> */}
       </Body>
     </ThemeProvider>

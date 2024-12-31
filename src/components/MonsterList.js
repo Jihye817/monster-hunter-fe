@@ -1,8 +1,32 @@
 import { mockData } from "../mockData";
 import MonsterListItem from "./MonsterListItem";
+import apiModules from "../utils/api";
+import { useEffect, useState } from "react";
 
 const MonsterList = () => {
-  const listItem = mockData;
+  // const listItem = mockData;
+  const [listItem, setListItem] = useState([]);
+
+  useEffect(() => {
+    fetchMonsterLists();
+  }, []);
+
+  const fetchMonsterLists = async () => {
+    try {
+      let monsterList = localStorage.getItem("monsterList");
+      if (monsterList === null) {
+        let monsterList = await apiModules.getMonsterLists();
+        setListItem(monsterList);
+        localStorage.setItem("monsterList", JSON.stringify(monsterList));
+      } else {
+        const parsedList = JSON.parse(monsterList);
+        setListItem(parsedList);
+      }
+    } catch (error) {
+      console.log("error : ", error);
+    }
+  };
+
   return (
     <>
       <div className="content_title">몬스터 정보</div>
@@ -27,7 +51,7 @@ const MonsterList = () => {
           <span>데이터가 없습니다</span>
         ) : (
           listItem.map((item) => {
-            return <MonsterListItem item={item} key={item.id}/>;
+            return <MonsterListItem item={item} key={item.seq} />;
           })
         )}
       </div>
