@@ -7,6 +7,8 @@ import apiModules from "../utils/api";
 
 const Board = () => {
   const [postList, setPostList] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
   const navigate = useNavigate();
   const navigateToPostCreate = () => {
     navigate(ROUTES.POST_CREATE);
@@ -14,14 +16,23 @@ const Board = () => {
 
   useEffect(() => {
     fetchPostLists();
-  }, []);
+  }, [currentPage]);
 
   const fetchPostLists = async () => {
     try {
-      let posts = await apiModules.getBoardPostLists();
+      let posts = await apiModules.getBoardPostLists(currentPage);
       setPostList(posts.data.content);
+      setTotalPages(posts.data.totalPages);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handlePageChange = (page) => {
+    if (page < 0 || page >= totalPages) {
+      return;
+    } else {
+      setCurrentPage(page);
     }
   };
 
@@ -62,18 +73,26 @@ const Board = () => {
           </div>
         </div>
         <div className="pagination_wrap">
-          <img src={require("../assets/icons/arrow_left_w.png")}></img>
-          <span>1</span>
-          <span>2</span>
-          <span>3</span>
-          <span>4</span>
-          <span>5</span>
-          <span>6</span>
-          <span>7</span>
-          <span>8</span>
-          <span>9</span>
-          <span>10</span>
-          <img src={require("../assets/icons/arrow_right_w.png")}></img>
+          <img
+            src={require("../assets/icons/arrow_left_w.png")}
+            onClick={() => handlePageChange(currentPage - 1)}
+          ></img>
+          {Array.from({ length: totalPages }).map((_, index) => {
+            const page = index;
+            return (
+              <span
+                key={index}
+                className={page === currentPage ? "active" : ""}
+                onClick={() => handlePageChange(page)}
+              >
+                {page + 1}
+              </span>
+            );
+          })}
+          <img
+            src={require("../assets/icons/arrow_right_w.png")}
+            onClick={() => handlePageChange(currentPage + 1)}
+          ></img>
         </div>
       </div>
     </>

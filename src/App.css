@@ -253,6 +253,9 @@ section {
 .pagination_wrap > span:hover {
   color: #e69e4b;
 }
+.pagination_wrap > span.active {
+  color: #e69e4b;
+}
 
 .post_detail_container {
   padding: 20px 0px;

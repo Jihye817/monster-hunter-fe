@@ -3,7 +3,9 @@ import axios from "axios";
 //monster
 const getMonsterLists = async () => {
   try {
-    const response = await axios.get("http://59.11.225.224:8080/monster/list");
+    const response = await axios.get(
+      process.env.REACT_APP_SERVER_URL + "/monster/list"
+    );
     return response.data;
   } catch (error) {
     console.log(error);
@@ -13,7 +15,7 @@ const getMonsterLists = async () => {
 const getMonsterDetail = async (seq) => {
   try {
     const response = await axios.get(
-      "http://59.11.225.224:8080/monster/detail?seq=" + seq
+      process.env.REACT_APP_SERVER_URL + "/monster/detail?seq=" + seq
     );
     return response.data;
   } catch (error) {
@@ -22,9 +24,11 @@ const getMonsterDetail = async (seq) => {
 };
 
 //board
-const getBoardPostLists = async () => {
+const getBoardPostLists = async (page) => {
   try {
-    const response = await axios.get("http://59.11.225.224:8080/board/list");
+    const response = await axios.get(
+      process.env.REACT_APP_SERVER_URL + "/board/list?page=" + page
+    );
     return response.data;
   } catch (error) {
     console.log(error);
@@ -34,7 +38,7 @@ const getBoardPostLists = async () => {
 const getPostDetail = async (seq) => {
   try {
     const response = await axios.get(
-      "http://59.11.225.224:8080/board/detail/" + seq
+      process.env.REACT_APP_SERVER_URL + "/board/detail/" + seq
     );
     return response.data;
   } catch (error) {
@@ -45,7 +49,7 @@ const getPostDetail = async (seq) => {
 const createNewPost = async (newPost) => {
   try {
     const response = await axios.post(
-      "http://59.11.225.224:8080/board/insert",
+      process.env.REACT_APP_SERVER_URL + "/board/insert",
       newPost
     );
     return response.data;
