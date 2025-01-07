@@ -6,30 +6,31 @@ import apiModules from "../utils/api";
 
 const PostCreate = () => {
   const [newPost, setNewPost] = useState({
-    nickname: "",
+    nickname: "tester",
     title: "",
-    // body: "",
+    body: "",
   });
   const navigate = useNavigate();
   const navigateToBoard = () => {
     navigate(ROUTES.BOARD);
   };
 
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewPost({
+      ...newPost,
+      [name]: value,
+    });
+  };
+
   const handleSubmitButton = async () => {
     try {
-      let titleText = document.getElementById("title").value;
-      let bodyText = document.getElementById("body").value;
-      if (titleText === "" || bodyText === "") {
+      if (newPost.title === "" || newPost.body === "") {
         alert("제목과 내용은 비워둘 수 없습니다.");
       } else {
-        setNewPost({
-          nickname: "tester",
-          title: titleText,
-          body: bodyText,
-        });
-
         const response = await apiModules.createNewPost(newPost);
-        if (response === 200) {
+        if (response.status === 200) {
+          alert("게시물이 등록되었습니다.");
           navigate(ROUTES.BOARD);
         } else {
           alert("등록에 실패하였습니다.");
@@ -59,6 +60,8 @@ const PostCreate = () => {
             type="text"
             placeholder="제목을 입력해주세요"
             id="title"
+            name="title"
+            onChange={handleInputChange}
           ></input>
           <div>
             <span>작성자</span>
@@ -68,9 +71,11 @@ const PostCreate = () => {
         </div>
         <div className="post_text_wrap">
           <TextareaAutosize
-            id="body"
             className="post_textarea"
             placeholder="내용을 입력해주세요"
+            id="body"
+            name="body"
+            onChange={handleInputChange}
           ></TextareaAutosize>
         </div>
         <div className="post_btn_wrap">

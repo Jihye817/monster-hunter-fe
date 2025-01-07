@@ -13,7 +13,7 @@ const PostList = ({ item }) => {
         <span onClick={navigateToPost}>{item.title}</span>
       </div>
       <div className="post_nickname">{item.nickname}</div>
-      <div className="post_view">0</div>
+      <div className="post_view">{item.count}</div>
       <div className="post_created_at">{item.regDate.split("T")[0]}</div>
     </div>
   );
