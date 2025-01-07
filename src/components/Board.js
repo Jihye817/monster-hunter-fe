@@ -19,7 +19,7 @@ const Board = () => {
   const fetchPostLists = async () => {
     try {
       let posts = await apiModules.getBoardPostLists();
-      setPostList(posts);
+      setPostList(posts.content);
     } catch (error) {
       console.log(error);
     }
