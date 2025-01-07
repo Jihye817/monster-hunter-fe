@@ -6,7 +6,7 @@ import apiModules from "../utils/api";
 const PostDetail = () => {
   const params = useParams();
   const navigate = useNavigate();
-  const [post, setPost] = useState([]);
+  const [post, setPost] = useState({});
 
   const navigateToBoard = () => {
     navigate(ROUTES.BOARD);
@@ -22,8 +22,10 @@ const PostDetail = () => {
   const fetchPostDetail = async () => {
     try {
       let postDetail = await apiModules.getPostDetail(params.id);
-      postDetail.regDate = postDetail.regDate.split("T")[0];
-      setPost(postDetail);
+      setPost({
+        ...postDetail.data,
+        regDate: postDetail.data.regDate.split("T")[0],
+      });
     } catch (error) {
       console.log("error : ", error);
     }
@@ -50,7 +52,9 @@ const PostDetail = () => {
             <span>{post.regDate}</span>
           </div>
         </div>
-        <div className="post_text_wrap">{post.body}</div>
+        <div className="post_text_wrap">
+          <pre>{post.body}</pre>
+        </div>
         <div className="post_btn_wrap">
           <button className="primary" onClick={navigateToPostCreate}>
             글쓰기
