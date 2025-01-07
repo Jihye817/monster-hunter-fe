@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -13,6 +14,44 @@ const Container = styled.div`
 `;
 
 const JoinPage = () => {
+  const [inputs, setInputs] = useState({
+    id: "",
+    nickname: "",
+    password: "",
+  });
+  const [password, setPassword] = useState();
+  const [passwordCheck, setPasswordCheck] = useState();
+  const [isValidated, setIsValidated] = useState(true);
+  const [isPasswordSame, setIsPasswordSame] = useState(true);
+
+  const handlePassInputBlur = (e) => {
+    const inputPassword = e.target.value;
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
+
+    const validatePassword =
+      inputPassword.length > 8 && passwordRegex.test(inputPassword);
+
+    setInputs((prevInputs) => ({
+      ...prevInputs,
+      password: inputPassword,
+    }));
+    setIsValidated(validatePassword);
+
+    if (passwordCheck === inputPassword) {
+      setIsPasswordSame(true);
+    } else {
+      setIsPasswordSame(false);
+    }
+  };
+
+  const handleInputIsSameBlur = (e) => {
+    const inputPassword = e.target.value;
+    setPasswordCheck(inputPassword);
+    const isSame = inputs.password === inputPassword;
+    setIsPasswordSame(isSame);
+  };
+
   return (
     <Container>
       <div className="join_wrap">
@@ -39,14 +78,30 @@ const JoinPage = () => {
         <div>
           <div>비밀번호</div>
           <div className="join_input_wrap">
-            <input type="password" placeholder="비밀번호를 입력해주세요" />
+            <input
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+              onBlur={handlePassInputBlur}
+            />
           </div>
+          {!isValidated && (
+            <span className="input_warning">
+              비밀번호는 특수문자/숫자/영문자가 포함된 8자 이상이어야 합니다.
+            </span>
+          )}
         </div>
         <div>
           <div>비밀번호 확인</div>
           <div className="join_input_wrap">
-            <input type="password" placeholder="비밀번호를 다시 입력해주세요" />
+            <input
+              type="password"
+              placeholder="비밀번호를 다시 입력해주세요"
+              onBlur={handleInputIsSameBlur}
+            />
           </div>
+          {!isPasswordSame && (
+            <span className="input_warning">비밀번호가 일치하지 않습니다.</span>
+          )}
         </div>
         <div>
           <div>주 무기</div>
