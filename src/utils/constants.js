@@ -1,5 +1,5 @@
 export const ROUTES = {
-  MAIN: "*",
+  MAIN: "/",
   LOGIN: "/login",
   JOIN: "/join",
   BOARD: "/board",
