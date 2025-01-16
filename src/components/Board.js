@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { mockPost } from "../mockData";
 import PostListItem from "./PostListItem";
 import { ROUTES } from "../utils/constants";
 import { useEffect, useState } from "react";
@@ -76,6 +75,7 @@ const Board = () => {
           <img
             src={require("../assets/icons/arrow_left_w.png")}
             onClick={() => handlePageChange(currentPage - 1)}
+            alt="left arrow"
           ></img>
           {Array.from({ length: totalPages }).map((_, index) => {
             const page = index;
@@ -92,6 +92,7 @@ const Board = () => {
           <img
             src={require("../assets/icons/arrow_right_w.png")}
             onClick={() => handlePageChange(currentPage + 1)}
+            alt="right arrow"
           ></img>
         </div>
       </div>

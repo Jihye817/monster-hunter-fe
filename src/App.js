@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import styled, { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "./theme/theme";
@@ -12,6 +12,8 @@ import PostDetail from "./components/\bPostDetail";
 import PostCreate from "./components/PostCreate";
 import LoginPage from "./pages/LoginPage";
 import JoinPage from "./pages/JoinPage";
+import Mypage from "./components/Mypage";
+import apiModules from "./utils/api";
 
 const Body = styled.div`
   min-height: 100vh;
@@ -47,6 +49,36 @@ const Footer = styled.div`
 
 function App() {
   const [theme, setTheme] = useState("dark");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const checkLoginStatus = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (accessToken && refreshToken) {
+      try {
+        let tokens = {
+          accessToken: accessToken,
+          refreshToken: refreshToken,
+        };
+        const response = await apiModules.validateToken(tokens);
+        if (response.success) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.log("error : ", error);
+        setIsLoggedIn(false);
+      }
+    } else {
+      setIsLoggedIn(false);
+    }
+  };
+
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
+
   const toggleTheme = async () => {
     // setTheme(() => {
     //   return theme === "dark" ? "light" : "dark";
@@ -55,6 +87,9 @@ function App() {
   const navigate = useNavigate();
   const navigateToMain = () => {
     navigate(ROUTES.MAIN);
+  };
+  const navigateToMypage = () => {
+    navigate(ROUTES.MYPAGE);
   };
   const navigateToBoard = () => {
     navigate(ROUTES.BOARD);
@@ -68,12 +103,18 @@ function App() {
   const navigateToJoin = () => {
     navigate(ROUTES.JOIN);
   };
+  const handleLogoutClick = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    setIsLoggedIn(false);
+    alert("로그아웃 되었습니다.");
+  };
 
   return (
     <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
       <Body>
         <Routes>
-          <Route path={ROUTES.LOGIN} element={<LoginPage />}></Route>
+          <Route path={ROUTES.LOGIN} element={<LoginPage setIsLoggedIn={setIsLoggedIn} />}></Route>
           <Route path={ROUTES.JOIN} element={<JoinPage />}></Route>
           <Route
             path="*"
@@ -84,9 +125,21 @@ function App() {
                     MONSTER HUNTER :KR
                   </span>
                   <div className="title_btn_wrap">
-                    <span onClick={navigateToLogin}>로그인</span>
-                    <div className="title_bar"></div>
-                    <span onClick={navigateToJoin}>회원가입</span>
+                    {isLoggedIn ? (
+                      <>
+                        <span>ㅇㅇㅇ님 환영합니다!</span>
+                        <div className="title_bar"></div>
+                        <span onClick={navigateToMypage}>마이페이지</span>
+                        <div className="title_bar"></div>
+                        <span onClick={handleLogoutClick}>로그아웃</span>
+                      </>
+                    ) : (
+                      <>
+                        <span onClick={navigateToLogin}>로그인</span>
+                        <div className="title_bar"></div>
+                        <span onClick={navigateToJoin}>회원가입</span>
+                      </>
+                    )}
                   </div>
                 </Header>
                 <Main>
@@ -97,6 +150,7 @@ function App() {
                   <section>
                     <Routes>
                       <Route path={ROUTES.MAIN} element={<MainPage />}></Route>
+                      <Route path={ROUTES.MYPAGE} element={<Mypage />}></Route>
                       <Route
                         path={ROUTES.MONSTER_LIST}
                         element={<MonsterList />}

@@ -16,7 +16,7 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const LoginPage = () => {
+const LoginPage = ({setIsLoggedIn}) => {
   const [userData, setUserData] = useState({
     id: "",
     password: "",
@@ -39,6 +39,7 @@ const LoginPage = () => {
       if (response.success) {
         let accessToken = response.data.accessToken;
         localStorage.setItem("accessToken", accessToken);
+        setIsLoggedIn(true);
         navigate(ROUTES.MAIN);
       } else {
         alert("로그인이 실패하였습니다.");

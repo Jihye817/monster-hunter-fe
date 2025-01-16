@@ -11,11 +11,26 @@ const login = async (userData) => {
     console.log(response);
     if (response.status === 200) {
       localStorage.setItem("accessToken", response.data.accessToken);
-      console.log(response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
       return { success: true, data: response.data };
     } else {
       throw new Error("로그인이 실패하였습니다.");
     }
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message || "서버에 문제가 발생하였습니다.",
+    };
+  }
+};
+
+const validateToken = async (tokens) => {
+  try {
+    const response = await axios.post(
+      process.env.REACT_APP_SERVER_URL + "/validate-token",
+      tokens
+    );
+    return { success: true, data: response.data };
   } catch (error) {
     return {
       success: false,
@@ -102,6 +117,7 @@ const createNewPost = async (newPost) => {
 const apiModules = {
   login,
   join,
+  validateToken,
   getMonsterLists,
   getMonsterDetail,
   getBoardPostLists,
