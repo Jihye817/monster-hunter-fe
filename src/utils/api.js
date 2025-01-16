@@ -1,13 +1,14 @@
 import axios from "axios";
 import instance from "./axios";
 
+//login
 const login = async (userData) => {
   try {
     const response = await axios.post(
       process.env.REACT_APP_SERVER_URL + "/loginRequest",
       userData
     );
-    console.log(response)
+    console.log(response);
     if (response.status === 200) {
       localStorage.setItem("accessToken", response.data.accessToken);
       console.log(response.data.accessToken);
@@ -15,6 +16,22 @@ const login = async (userData) => {
     } else {
       throw new Error("로그인이 실패하였습니다.");
     }
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message || "서버에 문제가 발생하였습니다.",
+    };
+  }
+};
+
+//join
+const join = async (userData) => {
+  try {
+    const response = await axios.post(
+      process.env.REACT_APP_SERVER_URL + "/register",
+      userData
+    );
+    return { success: true, data: response.data };
   } catch (error) {
     return {
       success: false,
@@ -37,7 +54,7 @@ const getMonsterDetail = async (seq) => {
   try {
     const response = await instance.get("/monster/detail/" + seq);
     if (response.status === 200) {
-      console.log(response)
+      console.log(response);
       return response.data;
     } else {
       throw new Error("몬스터 상세정보 에러가 발생하였습니다.");
@@ -84,6 +101,7 @@ const createNewPost = async (newPost) => {
 
 const apiModules = {
   login,
+  join,
   getMonsterLists,
   getMonsterDetail,
   getBoardPostLists,

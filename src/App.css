@@ -23,7 +23,8 @@ button.outlined {
   cursor: pointer;
 }
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="email"] {
   padding: 8px 16px;
   height: 24px;
   border: none;
@@ -33,7 +34,8 @@ input[type="password"] {
   color: #eff0f5;
 }
 input[type="text"]:focus,
-input[type="password"]:focus {
+input[type="password"]:focus,
+input[type="email"]:focus {
   border: 1px solid #e69e4b;
   outline: none;
 }
