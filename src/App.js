@@ -2,7 +2,6 @@ import { useState } from "react";
 import "./App.css";
 import styled, { ThemeProvider } from "styled-components";
 import { darkTheme, lightTheme } from "./theme/theme";
-import apiModules from "./utils/api";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { ROUTES } from "./utils/constants";
 import MainPage from "./pages/MainPage";
@@ -77,7 +76,7 @@ function App() {
           <Route path={ROUTES.LOGIN} element={<LoginPage />}></Route>
           <Route path={ROUTES.JOIN} element={<JoinPage />}></Route>
           <Route
-            path={ROUTES.MAIN}
+            path="*"
             element={
               <Container>
                 <Header>
