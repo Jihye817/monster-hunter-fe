@@ -3,6 +3,7 @@ export const ROUTES = {
   LOGIN: "/login",
   JOIN: "/join",
   MYPAGE: "/mypage",
+  MYPAGE_PASS_CHECK: "/mypage/check",
   BOARD: "/board",
   POST_DETAIL: "/board/:id",
   POST_CREATE: "/board/new",

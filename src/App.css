@@ -453,7 +453,6 @@ section {
   margin-left: 10px;
   height: 40px;
 }
-
 .mypage_info_wrap > .input_wrap > input,
 .mypage_info_wrap > .input_wrap > div > input,
 .mypage_info_wrap > .input_wrap > select {
@@ -466,4 +465,13 @@ section {
 }
 .mypage_btn_wrap > button {
   margin-left: 10px;
+}
+
+.mypage_check_container {
+  padding: 50px 0px 0px 0px;
+  min-height: 250px;
+  text-align: center;
+}
+.mypage_check_container > input {
+  margin: 30px 0px;
 }

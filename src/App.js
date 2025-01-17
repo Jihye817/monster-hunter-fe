@@ -14,6 +14,7 @@ import LoginPage from "./pages/LoginPage";
 import JoinPage from "./pages/JoinPage";
 import Mypage from "./components/Mypage";
 import apiModules from "./utils/api";
+import MypagePassCheck from "./components/MypagePassCheck";
 
 const Body = styled.div`
   min-height: 100vh;
@@ -50,6 +51,10 @@ const Footer = styled.div`
 function App() {
   const [theme, setTheme] = useState("dark");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({
+    id: "",
+    nickname: "",
+  });
 
   const checkLoginStatus = async () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -63,6 +68,10 @@ function App() {
         const response = await apiModules.validateToken(tokens);
         if (response.success) {
           setIsLoggedIn(true);
+          setUserData({
+            id: response.data.data.id,
+            nickname: response.data.data.nickname,
+          });
         } else {
           setIsLoggedIn(false);
         }
@@ -88,8 +97,8 @@ function App() {
   const navigateToMain = () => {
     navigate(ROUTES.MAIN);
   };
-  const navigateToMypage = () => {
-    navigate(ROUTES.MYPAGE);
+  const navigateToMypagePassCheck = () => {
+    navigate(ROUTES.MYPAGE_PASS_CHECK);
   };
   const navigateToBoard = () => {
     navigate(ROUTES.BOARD);
@@ -114,7 +123,10 @@ function App() {
     <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
       <Body>
         <Routes>
-          <Route path={ROUTES.LOGIN} element={<LoginPage setIsLoggedIn={setIsLoggedIn} />}></Route>
+          <Route
+            path={ROUTES.LOGIN}
+            element={<LoginPage setIsLoggedIn={setIsLoggedIn} />}
+          ></Route>
           <Route path={ROUTES.JOIN} element={<JoinPage />}></Route>
           <Route
             path="*"
@@ -127,9 +139,11 @@ function App() {
                   <div className="title_btn_wrap">
                     {isLoggedIn ? (
                       <>
-                        <span>ㅇㅇㅇ님 환영합니다!</span>
+                        <span style={{cursor: "default"}}>{userData.nickname}님 환영합니다!</span>
                         <div className="title_bar"></div>
-                        <span onClick={navigateToMypage}>마이페이지</span>
+                        <span onClick={navigateToMypagePassCheck}>
+                          마이페이지
+                        </span>
                         <div className="title_bar"></div>
                         <span onClick={handleLogoutClick}>로그아웃</span>
                       </>
@@ -150,7 +164,11 @@ function App() {
                   <section>
                     <Routes>
                       <Route path={ROUTES.MAIN} element={<MainPage />}></Route>
-                      <Route path={ROUTES.MYPAGE} element={<Mypage />}></Route>
+                      <Route
+                        path={ROUTES.MYPAGE_PASS_CHECK}
+                        element={<MypagePassCheck id={userData.id} />}
+                      ></Route>
+                      <Route path={ROUTES.MYPAGE} element={<Mypage/>}></Route>
                       <Route
                         path={ROUTES.MONSTER_LIST}
                         element={<MonsterList />}

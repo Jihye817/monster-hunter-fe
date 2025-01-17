@@ -30,6 +30,7 @@ const validateToken = async (tokens) => {
       process.env.REACT_APP_SERVER_URL + "/validate-token",
       tokens
     );
+    console.log(response);
     return { success: true, data: response.data };
   } catch (error) {
     return {
@@ -55,6 +56,21 @@ const join = async (userData) => {
   }
 };
 
+//mypage
+const mypagePassCheck = async (id) => {
+  try {
+    const response = await axios.post(
+      process.env.REACT_APP_SERVER_URL + "/user/" + id + "/passCheck"
+    );
+    return { success: true, data: response.data };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message || "서버에 문제가 발생하였습니다.",
+    };
+  }
+};
+
 //monster
 const getMonsterLists = async () => {
   try {
@@ -69,7 +85,6 @@ const getMonsterDetail = async (seq) => {
   try {
     const response = await instance.get("/monster/detail/" + seq);
     if (response.status === 200) {
-      console.log(response);
       return response.data;
     } else {
       throw new Error("몬스터 상세정보 에러가 발생하였습니다.");
@@ -118,6 +133,7 @@ const apiModules = {
   login,
   join,
   validateToken,
+  mypagePassCheck,
   getMonsterLists,
   getMonsterDetail,
   getBoardPostLists,
