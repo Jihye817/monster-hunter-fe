@@ -427,3 +427,43 @@ section {
 .detail_img_wrap > img {
   width: 100%;
 }
+
+/* mypage */
+.mypage_container {
+  padding: 20px 0px;
+}
+.mypage_info_wrap {
+  padding: 0px 0px 20px 20px;
+}
+.mypage_info_wrap > .input_wrap {
+  display: flex;
+  align-items: center;
+  margin: 20px 0px;
+}
+.mypage_info_wrap > .input_wrap > div:first-child {
+  width: 6rem;
+  margin-right: 20px;
+}
+.mypage_info_wrap > .input_wrap > .password_wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.mypage_info_wrap > .input_wrap > button {
+  margin-left: 10px;
+  height: 40px;
+}
+
+.mypage_info_wrap > .input_wrap > input,
+.mypage_info_wrap > .input_wrap > div > input,
+.mypage_info_wrap > .input_wrap > select {
+  width: 12rem;
+}
+.mypage_btn_wrap {
+  border-top: 1px solid #404049;
+  padding-top: 20px;
+  text-align: end;
+}
+.mypage_btn_wrap > button {
+  margin-left: 10px;
+}
