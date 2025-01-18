@@ -57,10 +57,25 @@ const join = async (userData) => {
 };
 
 //mypage
-const mypagePassCheck = async (id) => {
+const mypagePassCheck = async (userData) => {
   try {
     const response = await axios.post(
-      process.env.REACT_APP_SERVER_URL + "/user/" + id + "/passCheck"
+      process.env.REACT_APP_SERVER_URL + "/user/" + userData.id + "/passCheck",
+      { password: userData.password }
+    );
+    return { success: true, data: response.data };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message || "서버에 문제가 발생하였습니다.",
+    };
+  }
+};
+
+const getUserData = async (id) => {
+  try {
+    const response = await axios.get(
+      process.env.REACT_APP_SERVER_URL + "/user/" + id
     );
     return { success: true, data: response.data };
   } catch (error) {
@@ -129,16 +144,49 @@ const createNewPost = async (newPost) => {
   }
 };
 
+//comment
+const getComment = async (id) => {
+  try {
+    const response = await axios.get(
+      process.env.REACT_APP_SERVER_URL + "/comment/list?type=string&fseq=" + id
+    );
+    return { success: true, data: response.data };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message || "서버에 문제가 발생하였습니다.",
+    };
+  }
+};
+
+const createNewComment = async (newComment) => {
+  try {
+    const response = await axios.post(
+      process.env.REACT_APP_SERVER_URL + "/comment/insert",
+      newComment
+    );
+    return { success: true, data: response.data };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message || "서버에 문제가 발생하였습니다.",
+    };
+  }
+};
+
 const apiModules = {
   login,
   join,
   validateToken,
   mypagePassCheck,
+  getUserData,
   getMonsterLists,
   getMonsterDetail,
   getBoardPostLists,
   getPostDetail,
   createNewPost,
+  getComment,
+  createNewComment,
 };
 
 export default apiModules;

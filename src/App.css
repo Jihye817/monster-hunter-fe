@@ -318,6 +318,45 @@ section {
   outline: none;
 }
 
+/* comment */
+.comment_wrap {
+  padding: 10px 0px;
+  margin-bottom: 10px;
+}
+.comment_title {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #404049;
+}
+.comment_nickname {
+  font-weight: 600;
+  margin-right: 10px;
+}
+.comment_edit {
+  display: flex;
+}
+.comment_edit > span {
+  cursor: pointer;
+}
+.comment_body {
+  padding: 10px;
+}
+.comment_new_wrap {
+  display: flex;
+  flex-direction: column;
+  text-align: end;
+  gap: 10px;
+}
+.comment_textarea {
+  padding: 20px;
+  border-radius: 4px;
+  min-height: 38px;
+  max-height: 38px;
+  background-color: #404049;
+  color: #eff0f5;
+}
+
 /* monster list */
 .search_bar_wrap {
   display: flex;
