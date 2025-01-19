@@ -8,10 +8,44 @@ const Board = () => {
   const [postList, setPostList] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const navigateToPostCreate = () => {
-    navigate(ROUTES.POST_CREATE);
+    if (isLoggedIn) {
+      navigate(ROUTES.POST_CREATE);
+    } else {
+      alert("로그인이 필요합니다.");
+      navigate(ROUTES.LOGIN);
+    }
   };
+
+  const checkLoginStatus = async () => {
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (accessToken && refreshToken) {
+      try {
+        let tokens = {
+          accessToken: accessToken,
+          refreshToken: refreshToken,
+        };
+        const response = await apiModules.validateToken(tokens);
+        if (response.success) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.log("error : ", error);
+        setIsLoggedIn(false);
+      }
+    } else {
+      setIsLoggedIn(false);
+    }
+  };
+
+  useEffect(() => {
+    checkLoginStatus();
+  }, []);
 
   useEffect(() => {
     fetchPostLists();
