@@ -359,6 +359,15 @@ section {
   background-color: #404049;
   color: #eff0f5;
 }
+.comment_update_wrap {
+  display: flex;
+  flex-direction: column;
+  text-align: end;
+  gap: 10px;
+}
+.comment_update_wrap > div > button {
+  margin-left: 10px;
+}
 
 /* monster list */
 .search_bar_wrap {

@@ -8,7 +8,7 @@ const Mypage = () => {
   const [isValidated, setIsValidated] = useState(true);
   const [isPasswordSame, setIsPasswordSame] = useState(true);
   const [userId, setUserId] = useState();
-  const [userData, setUserData] = useState({
+  const [mypageUserData, setMypageUserData] = useState({
     password: "",
     nickname: "",
     email: "",
@@ -27,10 +27,10 @@ const Mypage = () => {
 
   const fetchUserData = async () => {
     try {
-      let id = localStorage.getItem("userId");
-      let userDetail = await apiModules.getUserData(id);
-      setUserId(id);
-      setUserData({
+      let userData = JSON.parse(localStorage.getItem("userData"));
+      let userDetail = await apiModules.getUserData(userData.id);
+      setUserId(userData.id);
+      setMypageUserData({
         nickname: userDetail.data.nickname,
         email: userDetail.data.email,
         weapon: userDetail.data.weapon,
@@ -42,7 +42,7 @@ const Mypage = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserData((prevUserData) => ({
+    setMypageUserData((prevUserData) => ({
       ...prevUserData,
       [name]: value,
     }));
@@ -55,7 +55,7 @@ const Mypage = () => {
 
     const validatePassword =
       inputPassword.length >= 8 && passwordRegex.test(inputPassword);
-    setUserData((prevUserData) => ({
+    setMypageUserData((prevUserData) => ({
       ...prevUserData,
       password: inputPassword,
     }));
@@ -70,13 +70,13 @@ const Mypage = () => {
   const handleInputIsSameBlur = (e) => {
     const inputPassword = e.target.value;
     setPasswordCheck(inputPassword);
-    const isSame = userData.password === inputPassword;
+    const isSame = mypageUserData.password === inputPassword;
     setIsPasswordSame(isSame);
   };
   const handleModifyClick = async () => {
-    if (userData.password !== undefined && isPasswordSame) {
+    if (mypageUserData.password !== undefined && isPasswordSame) {
       try {
-        let response = await apiModules.modifyUser(userId, userData);
+        let response = await apiModules.modifyUser(userId, mypageUserData);
         if (response.success) {
           alert("성공적으로 수정되었습니다.");
           navigate(ROUTES.MAIN);
@@ -129,7 +129,7 @@ const Mypage = () => {
               name="nickname"
               type="text"
               onChange={handleInputChange}
-              value={userData.nickname}
+              value={mypageUserData.nickname}
             ></input>
             <button className="primary">중복확인</button>
           </div>
@@ -139,7 +139,7 @@ const Mypage = () => {
               name="email"
               type="email"
               onChange={handleInputChange}
-              value={userData.email}
+              value={mypageUserData.email}
             ></input>
             <button className="primary">중복확인</button>
           </div>
@@ -148,7 +148,7 @@ const Mypage = () => {
             <select
               name="weapon"
               onChange={handleInputChange}
-              value={userData.weapon}
+              value={mypageUserData.weapon}
             >
               <option>건랜스</option>
               <option>대검</option>

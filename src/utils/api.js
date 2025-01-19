@@ -8,7 +8,6 @@ const login = async (userData) => {
       process.env.REACT_APP_SERVER_URL + "/loginRequest",
       userData
     );
-    console.log(response);
     if (response.status === 200) {
       localStorage.setItem("accessToken", response.data.accessToken);
       localStorage.setItem("refreshToken", response.data.refreshToken);
@@ -30,7 +29,6 @@ const validateToken = async (tokens) => {
       process.env.REACT_APP_SERVER_URL + "/validate-token",
       tokens
     );
-    console.log(response);
     return { success: true, data: response.data };
   } catch (error) {
     return {
@@ -160,10 +158,14 @@ const createNewPost = async (newPost) => {
 };
 
 //comment
-const getComment = async (id) => {
+const getComment = async (type, id) => {
   try {
     const response = await axios.get(
-      process.env.REACT_APP_SERVER_URL + "/comment/list?type=string&fseq=" + id
+      process.env.REACT_APP_SERVER_URL +
+        "/comment/list?type=" +
+        type +
+        "&fseq=" +
+        id
     );
     return { success: true, data: response.data };
   } catch (error) {
@@ -189,6 +191,35 @@ const createNewComment = async (newComment) => {
   }
 };
 
+const updateComment = async (seq, updateComment) => {
+  try {
+    const response = await axios.put(
+      process.env.REACT_APP_SERVER_URL + "/comment/update/" + seq,
+      updateComment
+    );
+    return { success: true, data: response.data };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message || "서버에 문제가 발생하였습니다.",
+    };
+  }
+};
+
+const deleteComment = async (seq) => {
+  try {
+    const response = await axios.delete(
+      process.env.REACT_APP_SERVER_URL + "/comment/delete/" + seq
+    );
+    return { success: true, data: response.data };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message || "서버에 문제가 발생하였습니다.",
+    };
+  }
+};
+
 const apiModules = {
   login,
   join,
@@ -203,6 +234,8 @@ const apiModules = {
   createNewPost,
   getComment,
   createNewComment,
+  updateComment,
+  deleteComment,
 };
 
 export default apiModules;

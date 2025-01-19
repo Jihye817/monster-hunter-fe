@@ -41,7 +41,13 @@ const LoginPage = ({ setIsLoggedIn, setUserData }) => {
         let userId = response.data.id;
         let nickname = response.data.nickname;
         localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("userId", userId);
+        // localStorage.setItem("userId", userId);
+        let userData = {
+          id: userId,
+          nickname: nickname,
+        };
+        localStorage.setItem("userData", JSON.stringify(userData));
+
         setUserData({
           id: userId,
           nickname: nickname,

@@ -115,7 +115,7 @@ function App() {
   const handleLogoutClick = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
-    localStorage.removeItem("userId");
+    localStorage.removeItem("userData");
     setIsLoggedIn(false);
     alert("로그아웃 되었습니다.");
     navigate(ROUTES.MAIN);
