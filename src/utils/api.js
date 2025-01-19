@@ -86,6 +86,21 @@ const getUserData = async (id) => {
   }
 };
 
+const modifyUser = async (id, userData) => {
+  try {
+    const response = await axios.put(
+      process.env.REACT_APP_SERVER_URL + "/user/update/" + id,
+      userData
+    );
+    return { success: true, data: response.data };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message || "서버에 문제가 발생하였습니다.",
+    };
+  }
+};
+
 //monster
 const getMonsterLists = async () => {
   try {
@@ -180,6 +195,7 @@ const apiModules = {
   validateToken,
   mypagePassCheck,
   getUserData,
+  modifyUser,
   getMonsterLists,
   getMonsterDetail,
   getBoardPostLists,

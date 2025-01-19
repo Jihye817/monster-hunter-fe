@@ -319,6 +319,9 @@ section {
 }
 
 /* comment */
+.comment_head {
+  padding-bottom: 10px;
+}
 .comment_wrap {
   padding: 10px 0px;
   margin-bottom: 10px;

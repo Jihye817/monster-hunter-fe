@@ -8,10 +8,11 @@ const PostDetail = ({ id }) => {
   const params = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState({});
+  const [userId, setUserId] = useState();
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState({
     fseq: params.id,
-    id: "test1",
+    id: "",
     body: "",
   });
 
@@ -30,11 +31,17 @@ const PostDetail = ({ id }) => {
     try {
       let postDetail = await apiModules.getPostDetail(params.id);
       let postComments = await apiModules.getComment(params.id);
+      let id = localStorage.getItem("userId");
+      setUserId(id);
       setPost({
         ...postDetail,
         regDate: postDetail.regDate.split("T")[0],
       });
-      setComments(postComments.data.data);
+      setComments(postComments.data);
+      setNewComment({
+        ...newComment,
+        id: id,
+      });
     } catch (error) {
       console.log("error : ", error);
     }
@@ -92,7 +99,7 @@ const PostDetail = ({ id }) => {
           </button>
         </div>
         <div>
-          <div>댓글</div>
+          <div className="comment_head">댓글</div>
           {comments.map((item) => (
             <div key={item.seq} className="comment_wrap">
               <div className="comment_title">
@@ -107,7 +114,7 @@ const PostDetail = ({ id }) => {
                   </span>
                 </div>
                 <div className="comment_edit">
-                  {item.id === "test1" && (
+                  {item.id === userId && (
                     <>
                       <span>수정</span>
                       <div className="title_bar"></div>

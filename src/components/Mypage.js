@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../utils/constants";
+import apiModules from "../utils/api";
 
 const Mypage = () => {
   const [passwordCheck, setPasswordCheck] = useState();
   const [isValidated, setIsValidated] = useState(true);
   const [isPasswordSame, setIsPasswordSame] = useState(true);
+  const [userId, setUserId] = useState();
   const [userData, setUserData] = useState({
     password: "",
     nickname: "",
@@ -19,12 +21,31 @@ const Mypage = () => {
     navigate(ROUTES.MAIN);
   };
 
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  const fetchUserData = async () => {
+    try {
+      let id = localStorage.getItem("userId");
+      let userDetail = await apiModules.getUserData(id);
+      setUserId(id);
+      setUserData({
+        nickname: userDetail.data.nickname,
+        email: userDetail.data.email,
+        weapon: userDetail.data.weapon,
+      });
+    } catch (error) {
+      console.log("error : ", error);
+    }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserData({
-      ...userData,
+    setUserData((prevUserData) => ({
+      ...prevUserData,
       [name]: value,
-    });
+    }));
   };
 
   const handlePassInputBlur = (e) => {
@@ -51,6 +72,21 @@ const Mypage = () => {
     setPasswordCheck(inputPassword);
     const isSame = userData.password === inputPassword;
     setIsPasswordSame(isSame);
+  };
+  const handleModifyClick = async () => {
+    if (userData.password !== undefined && isPasswordSame) {
+      try {
+        let response = await apiModules.modifyUser(userId, userData);
+        if (response.success) {
+          alert("성공적으로 수정되었습니다.");
+          navigate(ROUTES.MAIN);
+        }
+      } catch (error) {
+        console.log("error : ", error);
+      }
+    } else {
+      alert("비밀번호를 확인해주세요");
+    }
   };
 
   return (
@@ -89,17 +125,31 @@ const Mypage = () => {
 
           <div className="input_wrap">
             <div>닉네임</div>
-            <input type="text" onChange={handleInputChange}></input>
+            <input
+              name="nickname"
+              type="text"
+              onChange={handleInputChange}
+              value={userData.nickname}
+            ></input>
             <button className="primary">중복확인</button>
           </div>
           <div className="input_wrap">
             <div>이메일</div>
-            <input type="email" onChange={handleInputChange}></input>
+            <input
+              name="email"
+              type="email"
+              onChange={handleInputChange}
+              value={userData.email}
+            ></input>
             <button className="primary">중복확인</button>
           </div>
           <div className="input_wrap">
             <div>주무기</div>
-            <select name="weapon" onChange={handleInputChange}>
+            <select
+              name="weapon"
+              onChange={handleInputChange}
+              value={userData.weapon}
+            >
               <option>건랜스</option>
               <option>대검</option>
               <option>라이트보우건</option>
@@ -118,8 +168,12 @@ const Mypage = () => {
           </div>
         </div>
         <div className="mypage_btn_wrap">
-          <button className="outlined" onClick={navigateToMain}>취소</button>
-          <button className="primary">수정</button>
+          <button className="outlined" onClick={navigateToMain}>
+            취소
+          </button>
+          <button className="primary" onClick={handleModifyClick}>
+            수정
+          </button>
         </div>
       </div>
     </>

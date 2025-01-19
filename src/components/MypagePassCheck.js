@@ -3,16 +3,16 @@ import apiModules from "../utils/api";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../utils/constants";
 
-const MypagePassCheck = ({id}) => {
+const MypagePassCheck = ({ id }) => {
   const [userData, setUserData] = useState({
-    id: "",
+    id: id,
     password: "",
   });
   const navigate = useNavigate();
 
   const handleCheckClick = async () => {
     try {
-      const response = await apiModules.mypagePassCheck(id);
+      const response = await apiModules.mypagePassCheck(userData);
       if (response.success) {
         navigate(ROUTES.MYPAGE);
       } else {
@@ -29,7 +29,6 @@ const MypagePassCheck = ({id}) => {
       ...userData,
       [name]: value,
     });
-    console.log(userData);
   };
 
   return (
@@ -44,7 +43,6 @@ const MypagePassCheck = ({id}) => {
         ></input>
         <div>
           <button className="primary" onClick={handleCheckClick}>
-            {" "}
             확인
           </button>
         </div>
