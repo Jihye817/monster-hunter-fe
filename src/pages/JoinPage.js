@@ -24,9 +24,9 @@ const JoinPage = () => {
     password: "",
     weapon: "",
   });
-  const [isIdUnique, setIsIdUnique] = useState(false);
-  const [isEmailUnique, setIsEmailUnique] = useState(false);
-  const [isNicknameUnique, setIsNicknameUnique] = useState(false);
+  const [isIdUnique, setIsIdUnique] = useState();
+  const [isEmailUnique, setIsEmailUnique] = useState();
+  const [isNicknameUnique, setIsNicknameUnique] = useState();
   const [passwordCheck, setPasswordCheck] = useState();
   const [isValidated, setIsValidated] = useState(true);
   const [isPasswordSame, setIsPasswordSame] = useState(true);
@@ -41,7 +41,51 @@ const JoinPage = () => {
       ...userData,
       [name]: value,
     });
-    console.log(userData);
+  };
+
+  const handleIdCheck = async () => {
+    try {
+      const response = await apiModules.idCheck(userData.id);
+      if (response.data) {
+        alert("사용가능한 아이디입니다.");
+        setIsIdUnique(true);
+      } else {
+        alert("사용불가능한 아이디입니다.");
+        setIsIdUnique(false);
+      }
+    } catch (error) {
+      alert("실패하였습니다.");
+    }
+  };
+
+  const handleEmailCheck = async () => {
+    try {
+      const response = await apiModules.emailCheck(userData.email);
+      if (response.data) {
+        alert("사용가능한 이메일입니다.");
+        setIsEmailUnique(true);
+      } else {
+        alert("사용불가능한 이메일입니다.");
+        setIsEmailUnique(false);
+      }
+    } catch (error) {
+      alert("실패하였습니다.");
+    }
+  };
+
+  const handleNicknameCheck = async () => {
+    try {
+      const response = await apiModules.nicknameCheck(userData.nickname);
+      if (response.data) {
+        alert("사용가능한 닉네임입니다.");
+        setIsNicknameUnique(true);
+      } else {
+        alert("사용불가능한 닉네임입니다.");
+        setIsNicknameUnique(false);
+      }
+    } catch (error) {
+      alert("실패하였습니다.");
+    }
   };
 
   const handlePassInputBlur = (e) => {
@@ -109,8 +153,13 @@ const JoinPage = () => {
               placeholder="아이디를 입력해주세요"
               onChange={handleInputChange}
             />
-            <button className="primary">중복확인</button>
+            <button className="primary" onClick={handleIdCheck}>
+              중복확인
+            </button>
           </div>
+          {!isIdUnique && isIdUnique !== undefined && (
+            <span className="input_warning">사용 불가능한 아이디입니다.</span>
+          )}
         </div>
         <div>
           <div>
@@ -126,8 +175,13 @@ const JoinPage = () => {
               placeholder="ex) abc@mail.com"
               onChange={handleInputChange}
             />
-            <button className="primary">중복확인</button>
+            <button className="primary" onClick={handleEmailCheck}>
+              중복확인
+            </button>
           </div>
+          {!isEmailUnique && isEmailUnique !== undefined && (
+            <span className="input_warning">사용 불가능한 이메일입니다.</span>
+          )}
         </div>
         <div>
           <div>닉네임</div>
@@ -138,8 +192,13 @@ const JoinPage = () => {
               placeholder="닉네임을 입력해주세요"
               onChange={handleInputChange}
             />
-            <button className="primary">중복확인</button>
+            <button className="primary" onClick={handleNicknameCheck}>
+              중복확인
+            </button>
           </div>
+          {!isNicknameUnique && isNicknameUnique !== undefined && (
+            <span className="input_warning">사용 불가능한 닉네임입니다.</span>
+          )}
         </div>
         <div>
           <div>비밀번호</div>
