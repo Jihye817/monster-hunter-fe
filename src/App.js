@@ -67,11 +67,11 @@ function App() {
         };
         const response = await apiModules.validateToken(tokens);
         if (response.success) {
-          setIsLoggedIn(true);
           setUserData({
-            id: response.data.data.id,
-            nickname: response.data.data.nickname,
+            id: response.data.id,
+            nickname: response.data.nickname,
           });
+          setIsLoggedIn(true);
         } else {
           setIsLoggedIn(false);
         }
@@ -115,8 +115,10 @@ function App() {
   const handleLogoutClick = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    localStorage.removeItem("userId");
     setIsLoggedIn(false);
     alert("로그아웃 되었습니다.");
+    navigate(ROUTES.MAIN);
   };
 
   return (
@@ -125,7 +127,7 @@ function App() {
         <Routes>
           <Route
             path={ROUTES.LOGIN}
-            element={<LoginPage setIsLoggedIn={setIsLoggedIn} />}
+            element={<LoginPage setIsLoggedIn={setIsLoggedIn} setUserData={setUserData} />}
           ></Route>
           <Route path={ROUTES.JOIN} element={<JoinPage />}></Route>
           <Route

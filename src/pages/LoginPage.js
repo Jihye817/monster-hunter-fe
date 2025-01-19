@@ -16,8 +16,8 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const LoginPage = ({setIsLoggedIn}) => {
-  const [userData, setUserData] = useState({
+const LoginPage = ({ setIsLoggedIn, setUserData }) => {
+  const [loginData, setLoginData] = useState({
     id: "",
     password: "",
   });
@@ -28,17 +28,24 @@ const LoginPage = ({setIsLoggedIn}) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setUserData({
-      ...userData,
+    setLoginData({
+      ...loginData,
       [name]: value,
     });
   };
   const handleLoginClick = async () => {
     try {
-      const response = await apiModules.login(userData);
+      const response = await apiModules.login(loginData);
       if (response.success) {
         let accessToken = response.data.accessToken;
+        let userId = response.data.id;
+        let nickname = response.data.nickname;
         localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("userId", userId);
+        setUserData({
+          id: userId,
+          nickname: nickname,
+        });
         setIsLoggedIn(true);
         navigate(ROUTES.MAIN);
       } else {
