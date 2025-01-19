@@ -133,6 +133,7 @@ const PostDetail = () => {
       const response = await apiModules.deleteComment(seq);
       if (response.success) {
         alert("성공적으로 삭제되었습니다.");
+        fetchPostDetail();
       } else {
         alert("댓글이 삭제되지 않았습니다.");
       }
@@ -148,6 +149,11 @@ const PostDetail = () => {
         const response = await apiModules.createNewComment(newComment);
         if (response.success) {
           alert("성공적으로 저장되었습니다.");
+          setNewComment({
+            ...newComment,
+            body: "",
+          });
+          fetchPostDetail();
         } else {
           alert("댓글이 저장되지 않았습니다.");
         }
@@ -255,6 +261,7 @@ const PostDetail = () => {
           <div className="comment_new_wrap">
             <TextareaAutosize
               className="comment_textarea"
+              value={newComment.body}
               onChange={handleInputChange}
             ></TextareaAutosize>
             <div>
