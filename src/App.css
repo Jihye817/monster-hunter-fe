@@ -183,6 +183,25 @@ section {
   color: #e64b4b;
 }
 
+/* password find */
+.pass_wrap {
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: center;
+}
+.pass_wrap > div:first-child {
+  padding-bottom: 20px;
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+}
+.pass_div_title {
+  margin-top: 30px;
+  text-align: left;
+}
+
 /* board */
 .board_container {
   margin: 12px 0px;

@@ -2,6 +2,7 @@ export const ROUTES = {
   MAIN: "/",
   LOGIN: "/login",
   JOIN: "/join",
+  PASSWORDFIND: "/passwordfind",
   MYPAGE: "/mypage",
   MYPAGE_PASS_CHECK: "/mypage/check",
   BOARD: "/board",

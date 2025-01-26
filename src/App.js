@@ -15,6 +15,7 @@ import JoinPage from "./pages/JoinPage";
 import Mypage from "./components/Mypage";
 import apiModules from "./utils/api";
 import MypagePassCheck from "./components/MypagePassCheck";
+import PasswordFindPage from "./pages/PasswordFindPage";
 
 const Body = styled.div`
   min-height: 100vh;
@@ -127,9 +128,18 @@ function App() {
         <Routes>
           <Route
             path={ROUTES.LOGIN}
-            element={<LoginPage setIsLoggedIn={setIsLoggedIn} setUserData={setUserData} />}
+            element={
+              <LoginPage
+                setIsLoggedIn={setIsLoggedIn}
+                setUserData={setUserData}
+              />
+            }
           ></Route>
           <Route path={ROUTES.JOIN} element={<JoinPage />}></Route>
+          <Route
+            path={ROUTES.PASSWORDFIND}
+            element={<PasswordFindPage />}
+          ></Route>
           <Route
             path="*"
             element={
@@ -141,7 +151,9 @@ function App() {
                   <div className="title_btn_wrap">
                     {isLoggedIn ? (
                       <>
-                        <span style={{cursor: "default"}}>{userData.nickname}님 환영합니다!</span>
+                        <span style={{ cursor: "default" }}>
+                          {userData.nickname}님 환영합니다!
+                        </span>
                         <div className="title_bar"></div>
                         <span onClick={navigateToMypagePassCheck}>
                           마이페이지
@@ -170,7 +182,7 @@ function App() {
                         path={ROUTES.MYPAGE_PASS_CHECK}
                         element={<MypagePassCheck id={userData.id} />}
                       ></Route>
-                      <Route path={ROUTES.MYPAGE} element={<Mypage/>}></Route>
+                      <Route path={ROUTES.MYPAGE} element={<Mypage />}></Route>
                       <Route
                         path={ROUTES.MONSTER_LIST}
                         element={<MonsterList />}

@@ -59,7 +59,6 @@ const idCheck = async (id) => {
     const response = await axios.get(
       process.env.REACT_APP_SERVER_URL + "/check-id?id=" + id
     );
-    console.log(response)
     return { success: true, data: response.data };
   } catch (error) {
     return {
@@ -87,6 +86,21 @@ const nicknameCheck = async (nickname) => {
   try {
     const response = await axios.get(
       process.env.REACT_APP_SERVER_URL + "/check-nickname?nickname=" + nickname
+    );
+    return { success: true, data: response.data };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message || "서버에 문제가 발생하였습니다.",
+    };
+  }
+};
+
+//password find
+const passwordFind = async (id) => {
+  try {
+    const response = await axios.post(
+      process.env.REACT_APP_SERVER_URL + "/password/reset/" + id
     );
     return { success: true, data: response.data };
   } catch (error) {
@@ -270,6 +284,7 @@ const apiModules = {
   idCheck,
   emailCheck,
   validateToken,
+  passwordFind,
   mypagePassCheck,
   getUserData,
   modifyUser,

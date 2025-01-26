@@ -26,6 +26,10 @@ const LoginPage = ({ setIsLoggedIn, setUserData }) => {
     navigate(ROUTES.JOIN);
   };
 
+  const navigateToPasswordFind = () => {
+    navigate(ROUTES.PASSWORDFIND);
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setLoginData({
@@ -84,7 +88,7 @@ const LoginPage = ({ setIsLoggedIn, setUserData }) => {
         <div className="login_bottom">
           <span onClick={navigateToJoin}>회원가입</span>
           <div className="title_bar"></div>
-          <span>비밀번호 찾기</span>
+          <span onClick={navigateToPasswordFind}>비밀번호 찾기</span>
         </div>
       </div>
     </Container>
