@@ -8,7 +8,15 @@ const Mypage = () => {
   const [isValidated, setIsValidated] = useState(true);
   const [isPasswordSame, setIsPasswordSame] = useState(true);
   const [userId, setUserId] = useState();
+  const [isEmailUnique, setIsEmailUnique] = useState(true);
+  const [isNicknameUnique, setIsNicknameUnique] = useState(true);
   const [mypageUserData, setMypageUserData] = useState({
+    password: "",
+    nickname: "",
+    email: "",
+    weapon: "",
+  });
+  const [updatedData, setUpdatedData] = useState({
     password: "",
     nickname: "",
     email: "",
@@ -25,12 +33,29 @@ const Mypage = () => {
     fetchUserData();
   }, []);
 
+  const handleEmailInputBlur = () => {
+    if (updatedData.email !== mypageUserData.email) {
+      setIsEmailUnique(false);
+    }
+  };
+
+  const handleNicknameInputBlur = () => {
+    if (updatedData.nickname !== mypageUserData.nickname) {
+      setIsNicknameUnique(false);
+    }
+  };
+
   const fetchUserData = async () => {
     try {
       let userData = JSON.parse(localStorage.getItem("userData"));
       let userDetail = await apiModules.getUserData(userData.id);
       setUserId(userData.id);
       setMypageUserData({
+        nickname: userDetail.data.nickname,
+        email: userDetail.data.email,
+        weapon: userDetail.data.weapon,
+      });
+      setUpdatedData({
         nickname: userDetail.data.nickname,
         email: userDetail.data.email,
         weapon: userDetail.data.weapon,
@@ -42,7 +67,7 @@ const Mypage = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setMypageUserData((prevUserData) => ({
+    setUpdatedData((prevUserData) => ({
       ...prevUserData,
       [name]: value,
     }));
@@ -55,7 +80,7 @@ const Mypage = () => {
 
     const validatePassword =
       inputPassword.length >= 8 && passwordRegex.test(inputPassword);
-    setMypageUserData((prevUserData) => ({
+    setUpdatedData((prevUserData) => ({
       ...prevUserData,
       password: inputPassword,
     }));
@@ -67,16 +92,22 @@ const Mypage = () => {
       setIsPasswordSame(false);
     }
   };
+
   const handleInputIsSameBlur = (e) => {
     const inputPassword = e.target.value;
     setPasswordCheck(inputPassword);
-    const isSame = mypageUserData.password === inputPassword;
+    const isSame = updatedData.password === inputPassword;
     setIsPasswordSame(isSame);
   };
   const handleModifyClick = async () => {
-    if (mypageUserData.password !== undefined && isPasswordSame) {
+    if (
+      updatedData.password !== undefined &&
+      isPasswordSame &&
+      isEmailUnique &&
+      isNicknameUnique
+    ) {
       try {
-        let response = await apiModules.modifyUser(userId, mypageUserData);
+        let response = await apiModules.modifyUser(userId, updatedData);
         if (response.success) {
           alert("성공적으로 수정되었습니다.");
           navigate(ROUTES.MAIN);
@@ -85,7 +116,58 @@ const Mypage = () => {
         console.log("error : ", error);
       }
     } else {
-      alert("비밀번호를 확인해주세요");
+      if (!isEmailUnique) {
+        alert("이메일 중복확인을 해주세요.");
+      } else if (!isEmailUnique) {
+        alert("닉네임 중복확인을 해주세요.");
+      } else if (updatedData.password === undefined) {
+        alert("비밀번호를 입력해주세요.");
+      } else if (!isPasswordSame) {
+        alert("비밀번호 확인이 일치하지 않습니다.");
+      } else {
+        alert("수정에 실패하였습니다.");
+      }
+    }
+  };
+
+  const handleEmailCheck = async () => {
+    if (mypageUserData.email === updatedData.email) {
+      alert("이전과 동일한 이메일입니다.");
+    } else {
+      try {
+        const response = await apiModules.emailCheck(mypageUserData.email);
+        if (!response.data) {
+          alert("사용가능한 이메일입니다.");
+          setIsEmailUnique(true);
+        } else {
+          alert("사용불가능한 이메일입니다.");
+          setIsEmailUnique(false);
+        }
+      } catch (error) {
+        alert("실패하였습니다.");
+      }
+    }
+  };
+
+  const handleNicknameCheck = async () => {
+    if (mypageUserData.nickname === updatedData.nickname) {
+      alert("이전과 동일한 닉네임입니다.");
+    } else {
+      try {
+        const response = await apiModules.nicknameCheck(
+          mypageUserData.nickname
+        );
+        if (!response.data) {
+          alert("사용가능한 닉네임입니다.");
+          setIsNicknameUnique(true);
+          console.log(isNicknameUnique);
+        } else {
+          alert("사용불가능한 닉네임입니다.");
+          setIsNicknameUnique(false);
+        }
+      } catch (error) {
+        alert("실패하였습니다.");
+      }
     }
   };
 
@@ -96,7 +178,7 @@ const Mypage = () => {
         <div className="mypage_info_wrap">
           <div className="input_wrap">
             <div>아이디</div>
-            <div>test1</div>
+            <div>{userId}</div>
           </div>
           <div className="input_wrap">
             <div>비밀번호</div>
@@ -129,9 +211,12 @@ const Mypage = () => {
               name="nickname"
               type="text"
               onChange={handleInputChange}
-              value={mypageUserData.nickname}
+              onBlur={handleNicknameInputBlur}
+              value={updatedData.nickname}
             ></input>
-            <button className="primary">중복확인</button>
+            <button className="primary" onClick={handleNicknameCheck}>
+              중복확인
+            </button>
           </div>
           <div className="input_wrap">
             <div>이메일</div>
@@ -139,16 +224,19 @@ const Mypage = () => {
               name="email"
               type="email"
               onChange={handleInputChange}
-              value={mypageUserData.email}
+              onBlur={handleEmailInputBlur}
+              value={updatedData.email}
             ></input>
-            <button className="primary">중복확인</button>
+            <button className="primary" onClick={handleEmailCheck}>
+              중복확인
+            </button>
           </div>
           <div className="input_wrap">
             <div>주무기</div>
             <select
               name="weapon"
               onChange={handleInputChange}
-              value={mypageUserData.weapon}
+              value={updatedData.weapon}
             >
               <option>건랜스</option>
               <option>대검</option>
