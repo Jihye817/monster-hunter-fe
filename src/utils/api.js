@@ -214,6 +214,22 @@ const createNewPost = async (newPost) => {
   }
 };
 
+const searchPost = async (title) => {
+  try {
+    const response = await instance.get("/board/list/search?title=" + title);
+    if (response.status === 200) {
+      return { success: true, data: response.data };
+    } else {
+      throw new Error("검색에 에러가 발생하였습니다.");
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message || "서버에 문제가 발생하였습니다.",
+    };
+  }
+};
+
 //comment
 const getComment = async (type, id) => {
   try {
@@ -293,6 +309,7 @@ const apiModules = {
   getBoardPostLists,
   getPostDetail,
   createNewPost,
+  searchPost,
   getComment,
   createNewComment,
   updateComment,

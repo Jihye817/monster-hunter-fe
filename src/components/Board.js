@@ -9,6 +9,7 @@ const Board = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [searchTitle, setSearchTitle] = useState("");
   const navigate = useNavigate();
   const navigateToPostCreate = () => {
     if (isLoggedIn) {
@@ -69,6 +70,20 @@ const Board = () => {
     }
   };
 
+  const handleSearchInputChange = (e) => {
+    setSearchTitle(e.target.value);
+  };
+
+  const handleSearchButtonClick = async () => {
+    const response = await apiModules.searchPost(searchTitle);
+    if (response.success) {
+      setPostList(response.data.content);
+      setTotalPages(response.data.totalPages);
+    } else {
+      alert("서버에 문제가 발생하였습니다.");
+    }
+  };
+
   return (
     <>
       <div className="content_title">자유게시판</div>
@@ -96,8 +111,14 @@ const Board = () => {
         </div>
         <div className="bottom_wrap">
           <div className="board_search_bar_wrap">
-            <input type="text" placeholder="검색어를 입력해주세요"></input>
-            <button className="primary">검색</button>
+            <input
+              type="text"
+              placeholder="검색어를 입력해주세요"
+              onChange={handleSearchInputChange}
+            ></input>
+            <button className="primary" onClick={handleSearchButtonClick}>
+              검색
+            </button>
           </div>
           <div className="write_btn_wrap">
             <button className="primary" onClick={navigateToPostCreate}>
