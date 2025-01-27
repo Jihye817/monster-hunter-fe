@@ -25,6 +25,10 @@ const SearchPage = ({ searchKeyword }) => {
     navigate(ROUTES.MONSTER_LIST + `?search=${searchKeyword}`);
   };
 
+  const handleMorePostClick = () => {
+    navigate(ROUTES.BOARD + `?search=${searchKeyword}`);
+  };
+
   useEffect(() => {
     getSearchResults();
   }, [searchKeyword]);
@@ -55,7 +59,7 @@ const SearchPage = ({ searchKeyword }) => {
       <div>
         <div className="search content_title">
           <span>자유게시판</span>
-          {searchResults.totalBoardCount > 3 ? <span>+ 더보기</span> : null}
+          {searchResults.totalBoardCount > 3 ? <span onClick={handleMorePostClick}>+ 더보기</span> : null}
         </div>
         {searchResults.totalBoardCount !== 0 ? (
           <div className="search board_container">

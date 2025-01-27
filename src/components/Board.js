@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import PostListItem from "./PostListItem";
 import { ROUTES } from "../utils/constants";
 import { useEffect, useState } from "react";
@@ -10,6 +10,7 @@ const Board = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searchTitle, setSearchTitle] = useState("");
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const navigateToPostCreate = () => {
     if (isLoggedIn) {
@@ -52,6 +53,14 @@ const Board = () => {
     fetchPostLists();
   }, [currentPage]);
 
+  useEffect(() => {
+    const searchQuery = searchParams.get("search");
+    if (searchQuery) {
+      setSearchTitle(searchQuery);
+      searchPosts(searchQuery);
+    }
+  }, [searchParams, currentPage]);
+
   const fetchPostLists = async () => {
     try {
       let posts = await apiModules.getBoardPostLists(currentPage);
@@ -59,6 +68,16 @@ const Board = () => {
       setTotalPages(posts.totalPages);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const searchPosts = async (keyword) => {
+    const response = await apiModules.searchPost(keyword);
+    if (response.success) {
+      setPostList(response.data.content);
+      setTotalPages(response.data.totalPages);
+    } else {
+      alert("서버에 문제가 발생하였습니다.");
     }
   };
 
@@ -75,13 +94,7 @@ const Board = () => {
   };
 
   const handleSearchButtonClick = async () => {
-    const response = await apiModules.searchPost(searchTitle);
-    if (response.success) {
-      setPostList(response.data.content);
-      setTotalPages(response.data.totalPages);
-    } else {
-      alert("서버에 문제가 발생하였습니다.");
-    }
+    searchPosts(searchTitle);
   };
 
   return (
@@ -115,6 +128,7 @@ const Board = () => {
               type="text"
               placeholder="검색어를 입력해주세요"
               onChange={handleSearchInputChange}
+              value={searchTitle}
             ></input>
             <button className="primary" onClick={handleSearchButtonClick}>
               검색
