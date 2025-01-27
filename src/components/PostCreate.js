@@ -29,7 +29,7 @@ const PostCreate = () => {
         alert("제목과 내용은 비워둘 수 없습니다.");
       } else {
         const response = await apiModules.createNewPost(newPost);
-        if (response.status === 200) {
+        if (response.success) {
           alert("게시물이 등록되었습니다.");
           navigate(ROUTES.BOARD);
         } else {

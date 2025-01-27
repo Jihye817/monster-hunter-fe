@@ -3,6 +3,7 @@ export const ROUTES = {
   LOGIN: "/login",
   JOIN: "/join",
   PASSWORDFIND: "/passwordfind",
+  SEARCH: "/search",
   MYPAGE: "/mypage",
   MYPAGE_PASS_CHECK: "/mypage/check",
   BOARD: "/board",

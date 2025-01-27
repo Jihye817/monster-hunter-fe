@@ -16,6 +16,7 @@ import Mypage from "./components/Mypage";
 import apiModules from "./utils/api";
 import MypagePassCheck from "./components/MypagePassCheck";
 import PasswordFindPage from "./pages/PasswordFindPage";
+import SearchPage from "./pages/SearchPage";
 
 const Body = styled.div`
   min-height: 100vh;
@@ -56,6 +57,8 @@ function App() {
     id: "",
     nickname: "",
   });
+  const [keyword, setKeyword] = useState("");
+  const [searchKeyword, setSearchKeyword] = useState("");
 
   const checkLoginStatus = async () => {
     const accessToken = localStorage.getItem("accessToken");
@@ -113,6 +116,9 @@ function App() {
   const navigateToJoin = () => {
     navigate(ROUTES.JOIN);
   };
+  const navigateToSearch = () => {
+    navigate(ROUTES.SEARCH);
+  };
   const handleLogoutClick = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
@@ -120,6 +126,13 @@ function App() {
     setIsLoggedIn(false);
     alert("로그아웃 되었습니다.");
     navigate(ROUTES.MAIN);
+  };
+  const handleInputChange = (e) => {
+    setKeyword(e.target.value);
+  };
+  const handleSearchClick = () => {
+    setSearchKeyword(keyword);
+    navigateToSearch();
   };
 
   return (
@@ -172,12 +185,32 @@ function App() {
                 </Header>
                 <Main>
                   <nav>
+                    <div className="search_wrap">
+                      <div className="search_title">
+                        <img
+                          className="search_img"
+                          src={require("./assets/icons/search_w.png")}
+                          alt="검색아이콘"
+                        ></img>
+                        <span className="search_span">통합검색</span>
+                      </div>
+                      <div>
+                        <input type="text" onChange={handleInputChange} />
+                        <button className="primary" onClick={handleSearchClick}>
+                          검색
+                        </button>
+                      </div>
+                    </div>
                     <div onClick={navigateToBoard}>자유게시판</div>
                     <div onClick={navigateToMonsterList}>몬스터 정보</div>
                   </nav>
                   <section>
                     <Routes>
                       <Route path={ROUTES.MAIN} element={<MainPage />}></Route>
+                      <Route
+                        path={ROUTES.SEARCH}
+                        element={<SearchPage searchKeyword={searchKeyword} />}
+                      ></Route>
                       <Route
                         path={ROUTES.MYPAGE_PASS_CHECK}
                         element={<MypagePassCheck id={userData.id} />}

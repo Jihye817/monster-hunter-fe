@@ -111,6 +111,21 @@ const passwordFind = async (id) => {
   }
 };
 
+//main
+const searchTotal = async (keyword) => {
+  try {
+    const response = await axios.get(
+      process.env.REACT_APP_SERVER_URL + "/main/search?keyword=" + keyword
+    );
+    return { success: true, data: response.data };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.message || "서버에 문제가 발생하였습니다.",
+    };
+  }
+};
+
 //mypage
 const mypagePassCheck = async (userData) => {
   try {
@@ -208,7 +223,7 @@ const createNewPost = async (newPost) => {
       process.env.REACT_APP_SERVER_URL + "/board/insert",
       newPost
     );
-    return response.data;
+    return { success: true, data: response.data };
   } catch (error) {
     console.log(error);
   }
@@ -301,6 +316,7 @@ const apiModules = {
   emailCheck,
   validateToken,
   passwordFind,
+  searchTotal,
   mypagePassCheck,
   getUserData,
   modifyUser,
