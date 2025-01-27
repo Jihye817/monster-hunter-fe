@@ -132,6 +132,7 @@ function App() {
   };
   const handleSearchClick = () => {
     setSearchKeyword(keyword);
+    setKeyword("");
     navigateToSearch();
   };
 
@@ -195,7 +196,12 @@ function App() {
                         <span className="search_span">통합검색</span>
                       </div>
                       <div>
-                        <input type="text" onChange={handleInputChange} />
+                        <input
+                          type="text"
+                          onChange={handleInputChange}
+                          value={keyword}
+                          placeholder="통합검색"
+                        />
                         <button className="primary" onClick={handleSearchClick}>
                           검색
                         </button>

@@ -2,15 +2,24 @@ import { mockData } from "../mockData";
 import MonsterListItem from "./MonsterListItem";
 import apiModules from "../utils/api";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const MonsterList = () => {
   const [listItem, setListItem] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filteredItem, setFilteredItem] = useState([]);
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     fetchMonsterLists();
   }, []);
+
+  useEffect(() => {
+    const searchQuery = searchParams.get("search");
+    if (searchQuery) {
+      setSearchText(searchQuery);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (searchText === "") {
@@ -58,6 +67,7 @@ const MonsterList = () => {
           type="text"
           placeholder="검색어를 입력해주세요"
           onChange={handleSearchInputChange}
+          value={searchText}
         />
         <button className="primary">검색</button>
       </div>
