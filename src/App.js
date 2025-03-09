@@ -8,7 +8,7 @@ import MainPage from "./pages/MainPage";
 import MonsterList from "./components/MonsterList";
 import MonsterDetail from "./components/MonsterDetail";
 import Board from "./components/Board";
-import PostDetail from "./components/\bPostDetail";
+import PostDetail from "./components/PostDetail";
 import PostCreate from "./components/PostCreate";
 import LoginPage from "./pages/LoginPage";
 import JoinPage from "./pages/JoinPage";
