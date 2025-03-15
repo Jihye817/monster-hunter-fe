@@ -34,16 +34,9 @@ const MonsterList = () => {
 
   const fetchMonsterLists = async () => {
     try {
-      let monsterList = localStorage.getItem("monsterList");
-      if (monsterList === null) {
-        let monsterList = await apiModules.getMonsterLists();
-        setListItem(monsterList);
-        setFilteredItem(monsterList);
-        localStorage.setItem("monsterList", JSON.stringify(monsterList));
-      } else {
-        const parsedList = JSON.parse(monsterList);
-        setListItem(parsedList);
-      }
+      let monsterList = await apiModules.getMonsterLists();
+      setListItem(monsterList);
+      setFilteredItem(monsterList);
     } catch (error) {
       console.log("error : ", error);
     }
